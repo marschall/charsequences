@@ -57,6 +57,55 @@ public class CharSequencesTest {
     assertInvalidInt("-12" + Long.toString((long) Integer.MIN_VALUE - 1L).substring(1));
   }
 
+  @Test
+  public void validLongs() {
+    assertParseLong(0, "+0");
+    assertParseLong(0, "-0");
+    assertParseLong(0, "0");
+
+    assertParseLong(0, "00");
+    assertParseLong(1, "01");
+    // more 0 than Integer.MAX_VALUE has places
+    assertParseLong(1, "000000000001");
+    assertParseLong(0, "+00");
+    assertParseLong(1, "+01");
+    assertParseLong(0, "-00");
+    assertParseLong(-1, "-01");
+
+    assertParseLong(1, "1");
+    assertParseLong(-1, "-1");
+    assertParseLong(Long.MAX_VALUE, Long.toString(Long.MAX_VALUE));
+    assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
+    assertParseLong(Long.MAX_VALUE, "00" + Long.toString(Long.MAX_VALUE));
+    assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
+  }
+
+  @Test
+  public void invalidLongs() {
+    assertInvalidLong(null);
+    assertInvalidLong("");
+    assertInvalidLong("+");
+    assertInvalidLong("-");
+    assertInvalidLong("++0");
+    assertInvalidLong("+-0");
+    assertInvalidLong("-+0");
+    assertInvalidLong("--0");
+
+    assertInvalidLong("0 ");
+    assertInvalidLong(" 0");
+    assertInvalidLong("0a");
+    assertInvalidLong("a0");
+    assertInvalidLong("0/");
+    assertInvalidLong("/0");
+    assertInvalidLong("0:");
+    assertInvalidLong(":0");
+
+    assertInvalidLong("9223372036854775808");
+    assertInvalidLong("19223372036854775807");
+    assertInvalidLong("-9223372036854775809");
+    assertInvalidLong("-19223372036854775808");
+  }
+
   private void assertParseInt(int expected, CharSequence charSequence) {
     assertEquals(expected, CharSequences.parseInt(charSequence));
     assertEquals(expected, Integer.parseInt(charSequence.toString()));
@@ -78,6 +127,38 @@ public class CharSequencesTest {
         Integer.parseInt(charSequence.toString());
       } else {
         Integer.parseInt(null);
+      }
+      fail("should be invalid \"" + charSequence + "\"");
+    } catch (NumberFormatException e) {
+      if (charSequence != null) {
+        assertTrue(e.getMessage().contains(charSequence));
+      } else {
+        assertTrue(e.getMessage().contains("null"));
+      }
+    }
+  }
+
+  private void assertParseLong(long expected, CharSequence charSequence) {
+    assertEquals(expected, CharSequences.parseLong(charSequence));
+    assertEquals(expected, Long.parseLong(charSequence.toString()));
+  }
+
+  private void assertInvalidLong(CharSequence charSequence) {
+    try {
+      CharSequences.parseInt(charSequence);
+      fail("should be invalid \"" + charSequence + "\"");
+    } catch (NumberFormatException e) {
+      if (charSequence != null) {
+        assertTrue(e.getMessage().contains(charSequence));
+      } else {
+        assertTrue(e.getMessage().contains("null"));
+      }
+    }
+    try {
+      if (charSequence != null) {
+        Long.parseLong(charSequence.toString());
+      } else {
+        Long.parseLong(null);
       }
       fail("should be invalid \"" + charSequence + "\"");
     } catch (NumberFormatException e) {

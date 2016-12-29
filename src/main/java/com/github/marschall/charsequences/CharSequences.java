@@ -9,6 +9,18 @@ public final class CharSequences {
     throw new AssertionError("not instantiable");
   }
 
+  /**
+   * Parses given char sequence compatible to {@link Integer#parseInt(String)}.
+   *
+   * @implNote no allocation is
+   * @param charSequence the {@code CharSequence} containing the {@code int}
+   *   representation to be parsed, {@code null} will cause a
+   *   {@code NumberFormatException} to be thrown
+   * @return the integer value represented by the argument in decimal
+   * @throws NumberFormatException if the charSequence does not
+   *   contain a parsable integer.
+   * @see Integer#parseInt(String)
+   */
   public static int parseInt(CharSequence charSequence) {
     if (charSequence == null) {
       throw new NumberFormatException("null");
@@ -43,7 +55,20 @@ public final class CharSequences {
       if (c < '0' || c > '9') {
         throw invalidDecimalNumber(charSequence);
       }
-      product = product * 10 - (c - '0');
+      int value = c - '0';
+      // maximum/minimum allowed values
+      // -2147483648
+      //  2147483647
+      if (product < -214748364) {
+        // will cause overflow
+        throw invalidDecimalNumber(charSequence);
+      } else if (product == -214748364) {
+        if ((negative && value == 9) || (!negative && value > 7)) {
+          // will cause overflow
+          throw invalidDecimalNumber(charSequence);
+        }
+      }
+      product = product * 10 - value;
     }
 
     if (negative) {
@@ -57,7 +82,57 @@ public final class CharSequences {
     if (charSequence == null) {
       throw new NumberFormatException("null");
     }
-    return 0;
+    int length = charSequence.length();
+    if (length == 0) {
+      throw invalidDecimalNumber(charSequence);
+    }
+    char first = charSequence.charAt(0);
+    int start;
+    boolean negative;
+    if (first == '-') {
+      negative = true;
+      start = 1;
+    } else if (first == '+') {
+      negative = false;
+      start = 1;
+    } else {
+      negative = false;
+      start = 0;
+    }
+
+    if (length - start == 0) {
+      throw invalidDecimalNumber(charSequence);
+    }
+
+    long product = 0;
+    // Long.MIN_VALUE does not have a positive representation but
+    // Long.MAX_VALUE has a negative representation so build negative numbers
+    for (int i = start; i < length; ++i) {
+      char c = charSequence.charAt(i);
+      if (c < '0' || c > '9') {
+        throw invalidDecimalNumber(charSequence);
+      }
+      int value = c - '0';
+      // maximum/minimum allowed values
+      // -9223372036854775808
+      //  9223372036854775807
+      if (product < -922337203685477580L) {
+        // will cause overflow
+        throw invalidDecimalNumber(charSequence);
+      } else if (product == -922337203685477580L) {
+        if ((negative && value == 9) || (!negative && value > 7)) {
+          // will cause overflow
+          throw invalidDecimalNumber(charSequence);
+        }
+      }
+      product = product * 10 - value;
+    }
+
+    if (negative) {
+      return product;
+    } else {
+      return -product;
+    }
   }
 
   private static NumberFormatException invalidDecimalNumber(CharSequence charSequence) {
