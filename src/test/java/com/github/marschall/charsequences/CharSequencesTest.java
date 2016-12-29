@@ -65,8 +65,8 @@ public class CharSequencesTest {
 
     assertParseLong(0, "00");
     assertParseLong(1, "01");
-    // more 0 than Integer.MAX_VALUE has places
-    assertParseLong(1, "000000000001");
+    // more 0 than Long.MAX_VALUE has places
+    assertParseLong(1, "0000000000000000000001");
     assertParseLong(0, "+00");
     assertParseLong(1, "+01");
     assertParseLong(0, "-00");
