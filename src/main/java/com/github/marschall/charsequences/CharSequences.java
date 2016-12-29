@@ -10,7 +10,7 @@ public final class CharSequences {
   }
 
   /**
-   * Parses given char sequence compatible to {@link Integer#parseInt(String)}.
+   * Parses a given char sequence compatible to {@link Integer#parseInt(String)}.
    *
    * @implNote no allocation is
    * @param charSequence the {@code CharSequence} containing the {@code int}
@@ -18,7 +18,7 @@ public final class CharSequences {
    *   {@code NumberFormatException} to be thrown
    * @return the integer value represented by the argument in decimal
    * @throws NumberFormatException if the charSequence does not
-   *   contain a parsable integer.
+   *   contain a parsable int
    * @see Integer#parseInt(String)
    */
   public static int parseInt(CharSequence charSequence) {
@@ -77,7 +77,67 @@ public final class CharSequences {
       return -product;
     }
   }
+  static int parseIntExact(CharSequence charSequence) {
+    if (charSequence == null) {
+      throw new NumberFormatException("null");
+    }
+    int length = charSequence.length();
+    if (length == 0) {
+      throw invalidDecimalNumber(charSequence);
+    }
+    char first = charSequence.charAt(0);
+    int start;
+    boolean negative;
+    if (first == '-') {
+      negative = true;
+      start = 1;
+    } else if (first == '+') {
+      negative = false;
+      start = 1;
+    } else {
+      negative = false;
+      start = 0;
+    }
 
+    if (length - start == 0) {
+      throw invalidDecimalNumber(charSequence);
+    }
+
+    int product = 0;
+    // Integer.MIN_VALUE does not have a positive representation but
+    // Integer.MAX_VALUE has a negative representation so build negative numbers
+    for (int i = start; i < length; ++i) {
+      char c = charSequence.charAt(i);
+      if (c < '0' || c > '9') {
+        throw invalidDecimalNumber(charSequence);
+      }
+      int value = c - '0';
+      try {
+        product = Math.subtractExact(Math.multiplyExact(product, 10), value);
+      } catch (ArithmeticException e) {
+        throw invalidDecimalNumber(charSequence);
+      }
+    }
+
+    if (negative) {
+      return product;
+    } else {
+      return -product;
+    }
+  }
+
+  /**
+   * Parses a given char sequence compatible to {@link Long#parseLong(String)}.
+   *
+   * @implNote no allocation is
+   * @param charSequence the {@code CharSequence} containing the {@code long}
+   *   representation to be parsed, {@code null} will cause a
+   *   {@code NumberFormatException} to be thrown
+   * @return the long value represented by the argument in decimal
+   * @throws NumberFormatException if the charSequence does not
+   *   contain a parsable long
+   * @see Long#parseLong
+   */
   public static long parseLong(CharSequence charSequence) {
     if (charSequence == null) {
       throw new NumberFormatException("null");
@@ -126,6 +186,54 @@ public final class CharSequences {
         }
       }
       product = product * 10 - value;
+    }
+
+    if (negative) {
+      return product;
+    } else {
+      return -product;
+    }
+  }
+  static long parseLongExact(CharSequence charSequence) {
+    if (charSequence == null) {
+      throw new NumberFormatException("null");
+    }
+    int length = charSequence.length();
+    if (length == 0) {
+      throw invalidDecimalNumber(charSequence);
+    }
+    char first = charSequence.charAt(0);
+    int start;
+    boolean negative;
+    if (first == '-') {
+      negative = true;
+      start = 1;
+    } else if (first == '+') {
+      negative = false;
+      start = 1;
+    } else {
+      negative = false;
+      start = 0;
+    }
+
+    if (length - start == 0) {
+      throw invalidDecimalNumber(charSequence);
+    }
+
+    long product = 0;
+    // Long.MIN_VALUE does not have a positive representation but
+    // Long.MAX_VALUE has a negative representation so build negative numbers
+    for (int i = start; i < length; ++i) {
+      char c = charSequence.charAt(i);
+      if (c < '0' || c > '9') {
+        throw invalidDecimalNumber(charSequence);
+      }
+      int value = c - '0';
+      try {
+        product = Math.subtractExact(Math.multiplyExact(product, 10), value);
+      } catch (ArithmeticException e) {
+        throw invalidDecimalNumber(charSequence);
+      }
     }
 
     if (negative) {
