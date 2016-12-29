@@ -207,12 +207,6 @@
       <version>2.0.0.0</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.github.marschall</groupId>
-      <artifactId>junit-lambda</artifactId>
-      <version>0.3.0</version>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
