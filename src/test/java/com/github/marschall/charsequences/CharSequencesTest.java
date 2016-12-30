@@ -192,13 +192,13 @@ public class CharSequencesTest {
   }
 
   @Test
-  public void betweenAnd() {
-    assertEquals("20.5K", CharSequences.betweenAnd("116.9K->96.4K(20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
-    assertEquals("", CharSequences.betweenAnd("116.9K->96.4K(), avg 17.5%, 0.0018690 secs", '(', ')'));
-    assertNull("20.5K", CharSequences.betweenAnd("116.9K->96.4K)(, avg 17.5%, 0.0018690 secs", '(', ')'));
+  public void subSequenceBetween() {
+    assertEquals("20.5K", CharSequences.subSequenceBetween("116.9K->96.4K(20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertEquals("", CharSequences.subSequenceBetween("116.9K->96.4K(), avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertNull("20.5K", CharSequences.subSequenceBetween("116.9K->96.4K)(, avg 17.5%, 0.0018690 secs", '(', ')'));
 
-    assertNull(CharSequences.betweenAnd("116.9K->96.4K(20.5K", '(', ')'));
-    assertNull(CharSequences.betweenAnd("20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertNull(CharSequences.subSequenceBetween("116.9K->96.4K(20.5K", '(', ')'));
+    assertNull(CharSequences.subSequenceBetween("20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
   }
 
 }
