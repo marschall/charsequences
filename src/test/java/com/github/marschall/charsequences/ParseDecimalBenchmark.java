@@ -15,6 +15,10 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class ParseDecimalBenchmark {
 
+  private static final String LARGE_INT_STRING = "11111111";
+
+  private static final String LARGE_LONG_STRING = "111111111111111";
+
   public static void main(String[] args) throws RunnerException {
     Options options = new OptionsBuilder()
             .include(".*ParseDecimalBenchmark.*")
@@ -31,18 +35,28 @@ public class ParseDecimalBenchmark {
   }
 
   @Benchmark
-  public int parseIntLarge() {
-    return CharSequences.parseInt("11111111");
+  public int parseIntSmallJdk() {
+    return Integer.parseInt("1");
   }
 
   @Benchmark
-  public int parseIntExactSmall() {
+  public int parseIntSmallExact() {
     return CharSequences.parseIntExact("1");
   }
 
   @Benchmark
-  public int parseIntExactLarge() {
-    return CharSequences.parseIntExact("11111111");
+  public int parseIntLarge() {
+    return CharSequences.parseInt(LARGE_INT_STRING);
+  }
+
+  @Benchmark
+  public int parseIntLargeExact() {
+    return CharSequences.parseIntExact(LARGE_INT_STRING);
+  }
+
+  @Benchmark
+  public int parseIntLargeJdk() {
+    return Integer.parseInt(LARGE_INT_STRING);
   }
 
   @Benchmark
@@ -51,18 +65,28 @@ public class ParseDecimalBenchmark {
   }
 
   @Benchmark
-  public long parseLongLarge() {
-    return CharSequences.parseLong("11111111");
-  }
-
-  @Benchmark
-  public long parseLongExactSmall() {
+  public long parseLongSmallExact() {
     return CharSequences.parseLongExact("1");
   }
 
   @Benchmark
-  public long parseLongExactLarge() {
-    return CharSequences.parseLongExact("11111111");
+  public long parseLongSmallJdk() {
+    return Long.parseLong("1");
+  }
+
+  @Benchmark
+  public long parseLongLarge() {
+    return CharSequences.parseLong(LARGE_LONG_STRING);
+  }
+
+  @Benchmark
+  public long parseLongLargeExact() {
+    return CharSequences.parseLongExact(LARGE_LONG_STRING);
+  }
+
+  @Benchmark
+  public long parseLongLargeJdk() {
+    return Long.parseLong(LARGE_LONG_STRING);
   }
 
 }
