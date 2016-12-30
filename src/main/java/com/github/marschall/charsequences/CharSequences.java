@@ -258,6 +258,16 @@ public final class CharSequences {
     return null;
   }
 
+  /**
+   * Searches for the first occurrence of a char within a sequence
+   * that's compatible with {@link String#indexOf(char)}.
+   *
+   * @param charSequence the sequence within to search, not {@code null}
+   * @param c the {@code char} to search for
+   * @return the index of the first occurrence of the specified
+   *   {@code char}, or {@code -1} if there is no such occurrence
+   * @see String#indexOf(char)
+   */
   public static int indexOf(CharSequence charSequence, char c) {
     int length = charSequence.length();
     for (int i = 0; i < length; ++i) {
@@ -268,12 +278,24 @@ public final class CharSequences {
     return -1;
   }
 
-  public static int indexOf(CharSequence charSequence, int start, char c) {
+  /**
+   * Searches for the first occurrence of a char within a sequence
+   * staring at a given index that's compatible with
+   * {@link String#indexOf(char, int)}.
+   *
+   * @param charSequence the sequence within to search, not {@code null}
+   * @param c the {@code char} to search for
+   * @param fromIndex the index at which to start the search from
+   * @return the index of the first occurrence of the specified
+   *   {@code char} after fromIndex, or {@code -1} if there is no such occurrence
+   * @see String#indexOf(char, int)
+   */
+  public static int indexOf(CharSequence charSequence, char c, int fromIndex) {
     int length = charSequence.length();
-    if (start >= length) {
+    if (fromIndex >= length) {
       throw new IllegalArgumentException();
     }
-    for (int i = start; i < length; ++i) {
+    for (int i = fromIndex; i < length; ++i) {
       if (charSequence.charAt(i) == c) {
         return i;
       }
@@ -281,6 +303,16 @@ public final class CharSequences {
     return -1;
   }
 
+  /**
+   * Searches for the last occurrence of a char within a sequence
+   * that's compatible with {@link String#indexOf(char)}.
+   *
+   * @param charSequence the sequence within to search, not {@code null}
+   * @param c the {@code char} to search for
+   * @return the index of the last occurrence of the specified
+   *   {@code char}, or {@code -1} if there is no such occurrence
+   * @see String#indexOf(char)
+   */
   public static int lastIndexOf(CharSequence charSequence, char c) {
     int length = charSequence.length();
     for (int i = length - 1; i >= 0; --i) {
@@ -291,6 +323,17 @@ public final class CharSequences {
     return -1;
   }
 
+  /**
+   * Searches for the first occurrence subsequence within a sequence
+   * that's compatible with {@link String#indexOf(String)}:
+   *
+   * @param charSequence the sequence within to search, not {@code null}
+   * @param subSequence the subsequence to search for, not {@code null}
+   * @return the index of the first {@code char} of the first
+   *   occurrence of the specified subsequence, or {@code -1} if there
+   *   is no such occurrence
+   * @see String#indexOf(String)
+   */
   public static int indexOf(CharSequence charSequence, String subSequence) {
     int sequenceLength = charSequence.length();
     int subSequenceLength = subSequence.length();

@@ -145,7 +145,7 @@ public class CharSequencesTest {
 
   private void assertInvalidLong(CharSequence charSequence) {
     try {
-      CharSequences.parseInt(charSequence);
+      CharSequences.parseLong(charSequence);
       fail("should be invalid \"" + charSequence + "\"");
     } catch (NumberFormatException e) {
       if (charSequence != null) {
