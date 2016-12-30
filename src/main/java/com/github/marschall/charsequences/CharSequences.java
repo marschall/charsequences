@@ -260,13 +260,13 @@ public final class CharSequences {
 
   /**
    * Searches for the first occurrence of a char within a sequence
-   * that's compatible with {@link String#indexOf(char)}.
+   * that's compatible with {@link String#indexOf(int)}.
    *
    * @param charSequence the sequence within to search, not {@code null}
    * @param c the {@code char} to search for
    * @return the index of the first occurrence of the specified
    *   {@code char}, or {@code -1} if there is no such occurrence
-   * @see String#indexOf(char)
+   * @see String#indexOf(int)
    */
   public static int indexOf(CharSequence charSequence, char c) {
     int length = charSequence.length();
@@ -281,14 +281,14 @@ public final class CharSequences {
   /**
    * Searches for the first occurrence of a char within a sequence
    * staring at a given index that's compatible with
-   * {@link String#indexOf(char, int)}.
+   * {@link String#indexOf(int, int)}.
    *
    * @param charSequence the sequence within to search, not {@code null}
    * @param c the {@code char} to search for
    * @param fromIndex the index at which to start the search from
    * @return the index of the first occurrence of the specified
    *   {@code char} after fromIndex, or {@code -1} if there is no such occurrence
-   * @see String#indexOf(char, int)
+   * @see String#indexOf(int, int)
    */
   public static int indexOf(CharSequence charSequence, char c, int fromIndex) {
     int length = charSequence.length();
@@ -305,13 +305,13 @@ public final class CharSequences {
 
   /**
    * Searches for the last occurrence of a char within a sequence
-   * that's compatible with {@link String#indexOf(char)}.
+   * that's compatible with {@link String#indexOf(int)}.
    *
    * @param charSequence the sequence within to search, not {@code null}
    * @param c the {@code char} to search for
    * @return the index of the last occurrence of the specified
    *   {@code char}, or {@code -1} if there is no such occurrence
-   * @see String#indexOf(char)
+   * @see String#indexOf(int)
    */
   public static int lastIndexOf(CharSequence charSequence, char c) {
     int length = charSequence.length();
