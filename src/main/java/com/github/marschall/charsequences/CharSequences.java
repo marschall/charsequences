@@ -147,17 +147,6 @@ public final class CharSequences {
     return new NumberFormatException("invalid decimal number " + charSequence);
   }
 
-  public static CharSequence subSequenceBetween(CharSequence charSequence, char start, char end) {
-    int startIndex = indexOf(charSequence, start);
-    if (startIndex != -1) {
-      int endIndex = lastIndexOf(charSequence, end);
-      if (endIndex > startIndex) {
-        return charSequence.subSequence(startIndex + 1, endIndex);
-      }
-    }
-    return null;
-  }
-
   /**
    * Searches for the first occurrence of a char within a sequence
    * that's compatible with {@link String#indexOf(int)}.

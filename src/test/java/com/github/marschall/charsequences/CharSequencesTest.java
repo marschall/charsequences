@@ -191,14 +191,26 @@ public class CharSequencesTest {
     assertEquals(2, CharSequences.lastIndexOf("aab", 'b'));
   }
 
+
+  public static CharSequence subSequenceBetween(CharSequence charSequence, char start, char end) {
+    int startIndex = CharSequences.indexOf(charSequence, start);
+    if (startIndex != -1) {
+      int endIndex = CharSequences.lastIndexOf(charSequence, end);
+      if (endIndex > startIndex) {
+        return charSequence.subSequence(startIndex + 1, endIndex);
+      }
+    }
+    return null;
+  }
+
   @Test
   public void subSequenceBetween() {
-    assertEquals("20.5K", CharSequences.subSequenceBetween("116.9K->96.4K(20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
-    assertEquals("", CharSequences.subSequenceBetween("116.9K->96.4K(), avg 17.5%, 0.0018690 secs", '(', ')'));
-    assertNull("20.5K", CharSequences.subSequenceBetween("116.9K->96.4K)(, avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertEquals("20.5K", CharSequencesTest.subSequenceBetween("116.9K->96.4K(20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertEquals("", CharSequencesTest.subSequenceBetween("116.9K->96.4K(), avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertNull("20.5K", CharSequencesTest.subSequenceBetween("116.9K->96.4K)(, avg 17.5%, 0.0018690 secs", '(', ')'));
 
-    assertNull(CharSequences.subSequenceBetween("116.9K->96.4K(20.5K", '(', ')'));
-    assertNull(CharSequences.subSequenceBetween("20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertNull(CharSequencesTest.subSequenceBetween("116.9K->96.4K(20.5K", '(', ')'));
+    assertNull(CharSequencesTest.subSequenceBetween("20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
   }
 
 }
