@@ -40,18 +40,8 @@ public class ParseDecimalBenchmark {
   }
 
   @Benchmark
-  public int parseIntSmallExact() {
-    return CharSequences.parseIntExact("1");
-  }
-
-  @Benchmark
   public int parseIntLarge() {
     return CharSequences.parseInt(LARGE_INT_STRING);
-  }
-
-  @Benchmark
-  public int parseIntLargeExact() {
-    return CharSequences.parseIntExact(LARGE_INT_STRING);
   }
 
   @Benchmark
@@ -65,11 +55,6 @@ public class ParseDecimalBenchmark {
   }
 
   @Benchmark
-  public long parseLongSmallExact() {
-    return CharSequences.parseLongExact("1");
-  }
-
-  @Benchmark
   public long parseLongSmallJdk() {
     return Long.parseLong("1");
   }
@@ -77,11 +62,6 @@ public class ParseDecimalBenchmark {
   @Benchmark
   public long parseLongLarge() {
     return CharSequences.parseLong(LARGE_LONG_STRING);
-  }
-
-  @Benchmark
-  public long parseLongLargeExact() {
-    return CharSequences.parseLongExact(LARGE_LONG_STRING);
   }
 
   @Benchmark
