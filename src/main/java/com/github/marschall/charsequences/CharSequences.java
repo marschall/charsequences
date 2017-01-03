@@ -245,6 +245,18 @@ public final class CharSequences {
     return -1;
   }
 
+  /**
+   * Returns a sequence whose value is the given sequence, with any
+   * leading and trailing spaces removed.
+   *
+   * @implNote allocation avoided if the sequence does not start or end with a space
+   * @implNote allocation avoided if the sequence is just spaces
+   * @param charSequence the sequence to trim, not {@code null}
+   * @return the trimmed sequence
+   * @see String#trim()
+   * @see CharSequence#subSequence(int, int)
+   * @throws NullPointerException if the given sequence is null
+   */
   public static CharSequence trim(CharSequence charSequence) {
     int length = charSequence.length();
     int start = 0;
@@ -258,6 +270,8 @@ public final class CharSequences {
       start += 1;
     }
 
+
+    // scan from end to start
     int end = length;
     while (end > start) {
       char c = charSequence.charAt(end - 1);
@@ -267,8 +281,9 @@ public final class CharSequences {
       end -= 1;
     }
 
-    // scan from end to start
-    if (start == 0 && end == length) {
+    if (length == 0) {
+      return "";
+    } else if (start == 0 && end == length) {
       return charSequence;
     } else {
       return charSequence.subSequence(start, end);
