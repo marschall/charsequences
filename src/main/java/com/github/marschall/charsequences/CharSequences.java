@@ -72,7 +72,11 @@ public final class CharSequences {
     if (negative) {
       return product;
     } else {
-      return -product;
+      try {
+        return Math.negateExact(product);
+      } catch (ArithmeticException e) {
+        throw invalidDecimalNumber(charSequence);
+      }
     }
   }
 
@@ -139,7 +143,11 @@ public final class CharSequences {
     if (negative) {
       return product;
     } else {
-      return -product;
+      try {
+        return Math.negateExact(product);
+      } catch (ArithmeticException e) {
+        throw invalidDecimalNumber(charSequence);
+      }
     }
   }
 
