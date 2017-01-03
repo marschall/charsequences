@@ -213,4 +213,32 @@ public class CharSequencesTest {
     assertNull(CharSequencesTest.subSequenceBetween("20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
   }
 
+  @Test
+  public void trim() {
+    assertTrim("", "");
+    assertTrim("", " ");
+    assertTrim("", "  ");
+    assertTrim("a", "a");
+
+    assertTrim("a", " a");
+    assertTrim("a", "a ");
+    assertTrim("a", " a ");
+
+    assertTrim("a", "  a");
+    assertTrim("a", "a  ");
+    assertTrim("a", "  a  ");
+
+    try {
+      CharSequences.trim(null);
+      fail("null should not be allowed");
+    } catch (NullPointerException e) {
+      // should reach here
+    }
+  }
+
+  private void assertTrim(String expected, CharSequence charSequence) {
+    assertEquals(expected, charSequence.toString().trim());
+    assertEquals(expected, CharSequences.trim(charSequence).toString());
+  }
+
 }

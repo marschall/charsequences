@@ -245,4 +245,34 @@ public final class CharSequences {
     return -1;
   }
 
+  public static CharSequence trim(CharSequence charSequence) {
+    int length = charSequence.length();
+    int start = 0;
+
+    // scan from start to end
+    while (start < length) {
+      char c = charSequence.charAt(start);
+      if (c != ' ') {
+        break;
+      }
+      start += 1;
+    }
+
+    int end = length;
+    while (end > start) {
+      char c = charSequence.charAt(end - 1);
+      if (c != ' ') {
+        break;
+      }
+      end -= 1;
+    }
+
+    // scan from end to start
+    if (start == 0 && end == length) {
+      return charSequence;
+    } else {
+      return charSequence.subSequence(start, end);
+    }
+  }
+
 }
