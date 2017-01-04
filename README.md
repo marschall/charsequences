@@ -14,7 +14,7 @@ Utility methods for dealing with `java.lang.CharSequence`. When dealing with [Ch
  - [indexOf(char)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#indexOf-int-)
  - [indexOf(char, int)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#indexOf-int-int-)
  - [contains(CharSequence)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#contains-java.lang.CharSequence-)
- - [trim()](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#trim)
+ - [trim()](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#trim--)
  - [Integer.parseInt(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-)
  - [Long.parseLong(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html#parseLong-java.lang.String-)
  
