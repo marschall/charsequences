@@ -5,6 +5,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Test;
 
 public class CharSequencesTest {
@@ -185,6 +190,14 @@ public class CharSequencesTest {
   }
 
   @Test
+  public void indexOfCharInt() {
+    assertEquals(CharSequences.indexOf("a", 'b', 0), "a".indexOf('b', 0));
+    assertEquals(CharSequences.indexOf("a", 'b', 1), "a".indexOf('b', 1));
+    assertEquals(CharSequences.indexOf("a", 'b', 2), "a".indexOf('b', 2));
+    assertEquals(CharSequences.indexOf("a", 'b', -1), "a".indexOf('b', -1));
+  }
+
+  @Test
   public void lastIndexOf() {
     assertEquals(-1, CharSequences.lastIndexOf("aaa", 'b'));
     assertEquals(0, CharSequences.lastIndexOf("baa", 'b'));
@@ -239,6 +252,24 @@ public class CharSequencesTest {
   private void assertTrim(String expected, CharSequence charSequence) {
     assertEquals(expected, charSequence.toString().trim());
     assertEquals(expected, CharSequences.trim(charSequence).toString());
+  }
+
+  @Test
+  public void split() {
+    assertEquals(Collections.singletonList("a"), split("a", ','));
+
+    assertEquals(Arrays.asList("a", "b"), split("a,b", ','));
+    assertEquals(Arrays.asList("a", "b", ""), split("a,b,", ','));
+    assertEquals(Arrays.asList("", "a", "b"), split(",a,b", ','));
+    assertEquals(Arrays.asList("a", "", "b"), split("a,,b", ','));
+  }
+
+  private static List<String> split(CharSequence charSequence, char delimiter) {
+    List<String> result = new ArrayList<>();
+    for (CharSequence each : CharSequences.split(charSequence, delimiter)) {
+      result.add(each.toString());
+    }
+    return result;
   }
 
 }

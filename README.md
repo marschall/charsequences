@@ -5,7 +5,7 @@ CharSequences [![Maven Central](https://maven-badges.herokuapp.com/maven-central
 <dependency>
     <groupId>com.github.marschall</groupId>
     <artifactId>charsequences</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -17,6 +17,7 @@ Utility methods for dealing with `java.lang.CharSequence`. When dealing with [Ch
  - [trim()](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#trim--)
  - [Integer.parseInt(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-)
  - [Long.parseLong(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html#parseLong-java.lang.String-)
+ - [String.split(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-), limited only a single character is allowed, not a full regex
  
 They avoid allocation where possible, check out the [Javadoc](http://www.javadoc.io/doc/com.github.marschall/charsequences) for more information.
 

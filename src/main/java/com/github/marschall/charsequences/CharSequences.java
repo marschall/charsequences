@@ -1,5 +1,8 @@
 package com.github.marschall.charsequences;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Utility methods for dealing with {@link CharSequence} objects.
  */
@@ -182,7 +185,10 @@ public final class CharSequences {
    *
    * @param charSequence the sequence within to search, not {@code null}
    * @param c the {@code char} to search for
-   * @param fromIndex the index at which to start the search from
+   * @param fromIndex the index at which to start the search from,
+   *        if it's larger than the length of this string then {@code -1}
+   *        is returned
+   *        if it's negative then it is treated as {@code 0}
    * @return the index of the first occurrence of the specified
    *   {@code char} after fromIndex, or {@code -1} if there is no such occurrence
    * @see String#indexOf(int, int)
@@ -190,7 +196,10 @@ public final class CharSequences {
   public static int indexOf(CharSequence charSequence, char c, int fromIndex) {
     int length = charSequence.length();
     if (fromIndex >= length) {
-      throw new IllegalArgumentException();
+      return -1;
+    }
+    if (fromIndex < 0) {
+      fromIndex = 0;
     }
     for (int i = fromIndex; i < length; ++i) {
       if (charSequence.charAt(i) == c) {
@@ -288,6 +297,96 @@ public final class CharSequences {
     } else {
       return charSequence.subSequence(start, end);
     }
+  }
+
+  /**
+   * Splits this string around matches of the given delimiter character.
+   *
+   * @implNote the iterable is lazily computed, no backing collection
+   *           is created
+   * @implNote calling {@link Iterable#iterator()} multiple times will
+   *           create a new iterator starting from the first occurrence
+   *           every time
+   *
+   * @param charSequence the CharSequence to split
+   * @param delimiter the delimiting character
+   * @return iterable of CharSequence computed by splitting the given
+   *         CharSequence around matches of the given delimiter character
+   */
+  public static Iterable<CharSequence> split(CharSequence charSequence, char delimiter) {
+    return new SubSequenceIterable(delimiter, charSequence);
+  }
+
+  static final class SubSequenceIterable implements Iterable<CharSequence> {
+
+    private final char delimiter;
+    private final CharSequence charSequence;
+
+    SubSequenceIterable(char delimeter, CharSequence charSequence) {
+      this.delimiter = delimeter;
+      this.charSequence = charSequence;
+    }
+
+    @Override
+    public Iterator<CharSequence> iterator() {
+      return new SubSequenceIterator(this.charSequence, this.delimiter);
+    }
+
+  }
+
+  static final class SubSequenceIterator implements Iterator<CharSequence> {
+
+    private final char delimiter;
+    private final CharSequence charSequence;
+
+    private int nextStart;
+    private int nextEnd;
+
+
+    SubSequenceIterator(CharSequence charSequence, char delimiter) {
+      this.charSequence = charSequence;
+      this.delimiter = delimiter;
+
+      this.nextStart = 0;
+      this.nextEnd = this.findEnd();
+    }
+
+    @Override
+    public boolean hasNext() {
+      return this.nextStart != -1;
+    }
+
+    @Override
+    public CharSequence next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+      CharSequence next = this.charSequence.subSequence(this.nextStart, this.nextEnd);
+      this.nextStart = this.nextEnd + 1;
+      if (this.nextStart > this.charSequence.length()) {
+        this.nextStart = -1;
+      } else {
+        this.nextEnd = this.findEnd();
+      }
+      return next;
+    }
+
+    private int findEnd() {
+      int fromIndex = this.nextStart;
+      int length = this.charSequence.length();
+      if (fromIndex > length) {
+        return length;
+      }
+      int end = indexOf(this.charSequence, this.delimiter, fromIndex);
+      if (end == -1) {
+        return length;
+      } else {
+        return end;
+      }
+    }
+
+
+
   }
 
 }
