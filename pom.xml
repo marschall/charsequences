@@ -270,7 +270,7 @@
     <javac.target>1.8</javac.target>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-    <jmh.version>1.17.3</jmh.version>
+    <jmh.version>1.18</jmh.version>
   </properties>
 
 </project>
