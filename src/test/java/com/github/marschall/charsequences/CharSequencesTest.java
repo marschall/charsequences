@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Test;
 
@@ -270,6 +271,27 @@ public class CharSequencesTest {
       result.add(each.toString());
     }
     return result;
+  }
+
+  @Test
+  public void uuidFromCharSequence() {
+    String s = "ba226cf7-d156-4b18-a78a-094736208cc9";
+    assertEquals(UUID.fromString(s), CharSequences.uuidFromCharSequence(s));
+
+    s = "BA226CF7-D156-4B18-A78A-094736208CC9";
+    assertEquals(UUID.fromString(s), CharSequences.uuidFromCharSequence(s));
+  }
+
+  @Test
+  public void hexDigit() {
+    assertEquals(9, CharSequences.hexDigit('9'));
+    assertEquals(0, CharSequences.hexDigit('0'));
+    assertEquals(0xa, CharSequences.hexDigit('a'));
+    assertEquals(0xA, CharSequences.hexDigit('A'));
+    assertEquals(0xf, CharSequences.hexDigit('f'));
+    assertEquals(0xF, CharSequences.hexDigit('F'));
+
+    assertEquals(0xAF, CharSequences.hexDigit('A') << 4 | CharSequences.hexDigit('F'));
   }
 
 }

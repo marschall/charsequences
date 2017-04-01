@@ -2,6 +2,7 @@ package com.github.marschall.charsequences;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 /**
  * Utility methods for dealing with {@link CharSequence} objects.
@@ -315,6 +316,64 @@ public final class CharSequences {
    */
   public static Iterable<CharSequence> split(CharSequence charSequence, char delimiter) {
     return new SubSequenceIterable(delimiter, charSequence);
+  }
+
+  /**
+   * Creates a UUID from a {@link CharSequence} like {@link UUID#fromString(String)}
+   *
+   * @implNote unlike {@link UUID#fromString(String)} performs no allocation
+   *           besides the {@link UUID}
+   * @implNote on a 64bit JVM with oop compression a UUID is 32 and the size of
+   *           a UUID string is 24 bytes for the string plus 88 for the backing
+   *           character array for a total of 112 bytes (on Java 8 at least)
+   *
+   * @param name the char sequence that specifies a {@code UUID}, not {@code null}
+   * @return a new {@code UUID} with the specified value
+   * @throws IllegalArgumentException if {@code name} is not in the format specified
+   * @throws NullPointerException if {@code name} is {@code null}
+   * @see UUID#fromString(String)
+   * @see UUID#toString()
+   */
+  public static UUID uuidFromCharSequence(CharSequence name) {
+    if (name.length() != 36) {
+      throw new IllegalArgumentException("Invalid UUID string: " + name);
+    }
+    if (name.charAt(8) != '-' || name.charAt(13) != '-' || name.charAt(18) != '-' || name.charAt(23) != '-') {
+      throw new IllegalArgumentException("Invalid UUID string: " + name);
+    }
+    long mostSigBits = 0L;
+    long leastSigBits = 0;
+
+    for (int i = 0; i < 18; ++i) {
+      if (i == 8 || i == 13) {
+        continue;
+      }
+      int digit = hexDigit(name.charAt(i));
+      mostSigBits = (mostSigBits << 4) | digit;
+    }
+
+    for (int i = 19; i < 36; ++i) {
+      if (i == 23) {
+        continue;
+      }
+      int digit = hexDigit(name.charAt(i));
+      leastSigBits = (leastSigBits << 4) | digit;
+    }
+
+    return new UUID(mostSigBits, leastSigBits);
+  }
+
+  static int hexDigit(char c) {
+    if (c >= '0' && c <= '9') {
+      return c - '0';
+    }
+    if (c >= 'a' && c <= 'f') {
+      return c - 'a' + 10;
+    }
+    if (c >= 'A' && c <= 'F') {
+      return c - 'A' + 10;
+    }
+    throw new IllegalArgumentException();
   }
 
   static final class SubSequenceIterable implements Iterable<CharSequence> {

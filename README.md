@@ -18,6 +18,7 @@ Utility methods for dealing with `java.lang.CharSequence`. When dealing with [Ch
  - [Integer.parseInt(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-)
  - [Long.parseLong(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html#parseLong-java.lang.String-)
  - [String.split(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-), limited only a single character is allowed, not a full regex
+ - [UUID.fromString(String)](https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#fromString-java.lang.String-), no intermediary allocation
  
 They avoid allocation where possible, check out the [Javadoc](http://www.javadoc.io/doc/com.github.marschall/charsequences) for more information.
 
