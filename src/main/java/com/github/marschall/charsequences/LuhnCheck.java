@@ -25,6 +25,7 @@ public final class LuhnCheck {
    *
    * @implNote no allocation is performed
    * @implNote no modulus is performed
+   * @implNote only {@code int} arithmetic is used
    * @implNote the sequence is scanned from start to end in order to help prefetching
    *
    * @param s the sequence to check, has to be numeric

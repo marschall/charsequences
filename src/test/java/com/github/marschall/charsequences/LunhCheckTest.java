@@ -19,4 +19,9 @@ public class LunhCheckTest {
     assertFalse(LuhnCheck.isValid("374648856525766"));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void exception() {
+    LuhnCheck.isValid("5116 3711 4643 4084");
+  }
+
 }
