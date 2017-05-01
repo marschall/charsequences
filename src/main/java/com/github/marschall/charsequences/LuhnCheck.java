@@ -23,6 +23,8 @@ public final class LuhnCheck {
    * <p>With the exception of the BIN validation they should all be done
    * before calling this method.</p>
    *
+   * <p>Spaces are not allowed.</p>
+   *
    * @implNote no allocation is performed
    * @implNote no modulus is performed
    * @implNote only {@code int} arithmetic is used
