@@ -1,6 +1,7 @@
 package com.github.marschall.charsequences;
 
 /**
+ * Provides methods for running a Luhn check on a {@link CharSequence}.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Luhn_algorithm">Luhn algorithm</a>
  */
@@ -11,55 +12,37 @@ public final class LuhnCheck {
   }
 
   /**
+   * Checks if a {@link CharSequence} is valid according to the Luhn algorithm.
    *
-   * @param s
-   * @return
-   * @throws NullPointerException
-   * @throws IllegalArgumentException
+   * <p>None of the following checks are performed:</p>
+   * <ul>
+   *  <li>No length validation is performed.</li>
+   *  <li>No BIN validation is performed.</li>
+   *  <li>No numeric check is performed.</li>
+   * </ul>
+   * <p>With the exception of the BIN validation they should all be done
+   * before calling this method.</p>
+   *
+   * @implNote no allocation is performed
+   * @implNote no modulus is performed
+   * @implNote the sequence is scanned from start to end in order to help prefetching
+   *
+   * @param s the sequence to check, has to be numeric
+   * @return if the sequence is valid according to Luhn
+   * @throws NullPointerException if the sequence is {@code null}
+   * @throws IllegalArgumentException if the sequence is not numeric
+   * @see CharSequences#isNumeric(CharSequence)
    */
   public static boolean isValid(CharSequence s) {
     int length = s.length();
     boolean odd = (length & 1) == 1;
-    int sum = odd ? oddTotalLengthSum(s, length) : evenTotalLengthSum(s, length);
-    int checkDigit = toInt(s.charAt(length - 1));
-    return (10- sum) == checkDigit;
+    int sum = odd ? oddLengthSum(s, length) : evenLengthSum(s, length);
+    return sum == 0;
   }
 
-  private static int oddTotalLengthSum(CharSequence s, int sequenceLength) {
-    // the length of the sequence we check is even
-
-    int runLength = sequenceLength - 1;
+  private static int evenLengthSum(CharSequence s, int sequenceLength) {
     int sum = 0;
-    for (int i = 0; i < runLength; i += 2) {
-      // add the first digit
-      int firstValue = toInt(s.charAt(i));
-      sum += firstValue;
-      // prevent overflow
-      if (sum >= 10) {
-        sum -= 10;
-      }
-
-      // add the second digit, doubled
-      int secondValue = toInt(s.charAt(i + 1)) * 2;
-      if (secondValue >= 10) {
-        // add individual digits
-        secondValue = secondValue - 9;
-      }
-      sum += secondValue;
-      // prevent overflow
-      if (sum >= 10) {
-        sum -= 10;
-      }
-    }
-    return sum;
-  }
-
-  private static int evenTotalLengthSum(CharSequence s, int sequenceLength) {
-    // the length of the sequence we check is odd
-
-    int runLength = sequenceLength - 2;
-    int sum = 0;
-    for (int i = 0; i < runLength; i += 2) {
+    for (int i = 0; i < sequenceLength; i += 2) {
       // add the first digit, doubled
       int firstValue = toInt(s.charAt(i)) * 2;
       if (firstValue >= 10) {
@@ -80,13 +63,36 @@ public final class LuhnCheck {
         sum -= 10;
       }
     }
+    return sum;
+  }
+
+  private static int oddLengthSum(CharSequence s, int sequenceLength) {
+    int runLength = sequenceLength - 1;
+    int sum = 0;
+    for (int i = 0; i < runLength; i += 2) {
+      // add the first digit
+      int secondValue = toInt(s.charAt(i));
+      sum += secondValue;
+      // prevent overflow
+      if (sum >= 10) {
+        sum -= 10;
+      }
+
+      // add the second digit, doubled
+      int firstValue = toInt(s.charAt(i + 1)) * 2;
+      if (firstValue >= 10) {
+        // add individual digits
+        firstValue = firstValue - 9;
+      }
+      sum += firstValue;
+      // prevent overflow
+      if (sum >= 10) {
+        sum -= 10;
+      }
+    }
 
     // add the last digit, doubled
-    int lastValue = toInt(s.charAt(runLength)) * 2;
-    if (lastValue >= 10) {
-      // add individual digits
-      lastValue = lastValue - 9;
-    }
+    int lastValue = toInt(s.charAt(runLength));
     sum += lastValue;
     // prevent overflow
     if (sum >= 10) {

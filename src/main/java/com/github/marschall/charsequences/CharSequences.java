@@ -14,6 +14,31 @@ public final class CharSequences {
   }
 
   /**
+   * Checks if the given char sequences is numeric.
+   *
+   * <p>A char sequence is considered to be numeric if it contains entirely
+   * out of numbers between {@code 0} and {@code 9}. Empty sequences are
+   * rejected as are ones with a leading {@code -}.</p>
+   *
+   * @param charSequence the sequence to check
+   * @return if the sequence is entirely made of of number
+   * @throws NullPointerException if the char sequence is {@code null}
+   */
+  public static boolean isNumeric(CharSequence charSequence) {
+    int length = charSequence.length();
+    if (length == 0) {
+      return false;
+    }
+    for (int i = 0; i < length; ++i) {
+      char c = charSequence.charAt(i);
+      if (c < '0' || c > '9') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * Parses a given char sequence compatible to {@link Integer#parseInt(String)}.
    *
    * @implNote no allocation is performed
@@ -25,6 +50,7 @@ public final class CharSequences {
    * @throws NumberFormatException if the charSequence does not
    *   contain a parsable int
    * @see Integer#parseInt(String)
+   * @see #isNumeric(CharSequence)
    */
   public static int parseInt(CharSequence charSequence) {
     if (charSequence == null) {
@@ -96,6 +122,7 @@ public final class CharSequences {
    * @throws NumberFormatException if the charSequence does not
    *   contain a parsable long
    * @see Long#parseLong
+   * @see #isNumeric(CharSequence)
    */
   public static long parseLong(CharSequence charSequence) {
     if (charSequence == null) {

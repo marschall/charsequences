@@ -1,6 +1,7 @@
 package com.github.marschall.charsequences;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -14,6 +15,23 @@ import java.util.UUID;
 import org.junit.Test;
 
 public class CharSequencesTest {
+
+  @Test
+  public void isNumeric() {
+    assertTrue(CharSequences.isNumeric("00123456789"));
+  }
+
+  @Test
+  public void isNotNumeric() {
+    assertFalse(CharSequences.isNumeric("-1"));
+    assertFalse(CharSequences.isNumeric(""));
+
+    for (int i = 127; i < Character.MAX_VALUE; i++) {
+      if (Character.isDigit(i)) {
+        assertFalse(CharSequences.isNumeric(Character.toString((char) i)));
+      }
+    }
+  }
 
   @Test
   public void validInts() {
