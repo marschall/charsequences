@@ -5,7 +5,7 @@ CharSequences [![Maven Central](https://maven-badges.herokuapp.com/maven-central
 <dependency>
     <groupId>com.github.marschall</groupId>
     <artifactId>charsequences</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.1</version>
 </dependency>
 ```
 
