@@ -27,7 +27,11 @@ public class UuidSizeTest {
     for (FieldLayout field : classLayout.fields()) {
       if (field.typeClass().endsWith("[]")) {
         Object fieldValue = this.vm.getObject(s, field.offset());
-        assertEquals(88L, this.vm.sizeOf(fieldValue));
+        if (isJava9OrLater()) {
+          assertEquals("size of Stirng.value", 56L, this.vm.sizeOf(fieldValue));
+        } else {
+          assertEquals("size of Stirng.value", 88L, this.vm.sizeOf(fieldValue));
+        }
       }
     }
     assertEquals(24L, VM.current().sizeOf(s));
@@ -38,6 +42,15 @@ public class UuidSizeTest {
   public void uuidSize() {
     UUID uuid = UUID.fromString("ba226cf7-d156-4b18-a78a-094736208cc9");
     assertEquals(32L, this.vm.sizeOf(uuid));
+  }
+
+  private static boolean isJava9OrLater() {
+    try {
+      Class.forName("java.lang.Runtime$Version");
+      return true;
+    } catch (ClassNotFoundException e) {
+      return false;
+    }
   }
 
 }
