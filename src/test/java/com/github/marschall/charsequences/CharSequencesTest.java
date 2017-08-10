@@ -35,99 +35,99 @@ public class CharSequencesTest {
 
   @Test
   public void validInts() {
-    assertParseInt(0, "+0");
-    assertParseInt(0, "-0");
-    assertParseInt(0, "0");
+    this.assertParseInt(0, "+0");
+    this.assertParseInt(0, "-0");
+    this.assertParseInt(0, "0");
 
-    assertParseInt(0, "00");
-    assertParseInt(1, "01");
+    this.assertParseInt(0, "00");
+    this.assertParseInt(1, "01");
     // more 0 than Integer.MAX_VALUE has places
-    assertParseInt(1, "000000000001");
-    assertParseInt(0, "+00");
-    assertParseInt(1, "+01");
-    assertParseInt(0, "-00");
-    assertParseInt(-1, "-01");
+    this.assertParseInt(1, "000000000001");
+    this.assertParseInt(0, "+00");
+    this.assertParseInt(1, "+01");
+    this.assertParseInt(0, "-00");
+    this.assertParseInt(-1, "-01");
 
-    assertParseInt(1, "1");
-    assertParseInt(-1, "-1");
-    assertParseInt(Integer.MAX_VALUE, Integer.toString(Integer.MAX_VALUE));
-    assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
-    assertParseInt(Integer.MAX_VALUE, "00" + Integer.toString(Integer.MAX_VALUE));
-    assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
+    this.assertParseInt(1, "1");
+    this.assertParseInt(-1, "-1");
+    this.assertParseInt(Integer.MAX_VALUE, Integer.toString(Integer.MAX_VALUE));
+    this.assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
+    this.assertParseInt(Integer.MAX_VALUE, "00" + Integer.toString(Integer.MAX_VALUE));
+    this.assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
   }
 
   @Test
   public void invalidInts() {
-    assertInvalidInt(null);
-    assertInvalidInt("");
-    assertInvalidInt("+");
-    assertInvalidInt("-");
-    assertInvalidInt("++0");
-    assertInvalidInt("+-0");
-    assertInvalidInt("-+0");
-    assertInvalidInt("--0");
+    this.assertInvalidInt(null);
+    this.assertInvalidInt("");
+    this.assertInvalidInt("+");
+    this.assertInvalidInt("-");
+    this.assertInvalidInt("++0");
+    this.assertInvalidInt("+-0");
+    this.assertInvalidInt("-+0");
+    this.assertInvalidInt("--0");
 
-    assertInvalidInt("0 ");
-    assertInvalidInt(" 0");
-    assertInvalidInt("0a");
-    assertInvalidInt("a0");
-    assertInvalidInt("0/");
-    assertInvalidInt("/0");
-    assertInvalidInt("0:");
-    assertInvalidInt(":0");
+    this.assertInvalidInt("0 ");
+    this.assertInvalidInt(" 0");
+    this.assertInvalidInt("0a");
+    this.assertInvalidInt("a0");
+    this.assertInvalidInt("0/");
+    this.assertInvalidInt("/0");
+    this.assertInvalidInt("0:");
+    this.assertInvalidInt(":0");
 
-    assertInvalidInt(Long.toString((long) Integer.MAX_VALUE + 1L));
-    assertInvalidInt("1" + Long.toString((long) Integer.MAX_VALUE + 1L));
-    assertInvalidInt("-12" + Long.toString((long) Integer.MIN_VALUE - 1L).substring(1));
+    this.assertInvalidInt(Long.toString(Integer.MAX_VALUE + 1L));
+    this.assertInvalidInt("1" + Long.toString(Integer.MAX_VALUE + 1L));
+    this.assertInvalidInt("-12" + Long.toString(Integer.MIN_VALUE - 1L).substring(1));
   }
 
   @Test
   public void validLongs() {
-    assertParseLong(0, "+0");
-    assertParseLong(0, "-0");
-    assertParseLong(0, "0");
+    this.assertParseLong(0, "+0");
+    this.assertParseLong(0, "-0");
+    this.assertParseLong(0, "0");
 
-    assertParseLong(0, "00");
-    assertParseLong(1, "01");
+    this.assertParseLong(0, "00");
+    this.assertParseLong(1, "01");
     // more 0 than Long.MAX_VALUE has places
-    assertParseLong(1, "0000000000000000000001");
-    assertParseLong(0, "+00");
-    assertParseLong(1, "+01");
-    assertParseLong(0, "-00");
-    assertParseLong(-1, "-01");
+    this.assertParseLong(1, "0000000000000000000001");
+    this.assertParseLong(0, "+00");
+    this.assertParseLong(1, "+01");
+    this.assertParseLong(0, "-00");
+    this.assertParseLong(-1, "-01");
 
-    assertParseLong(1, "1");
-    assertParseLong(-1, "-1");
-    assertParseLong(Long.MAX_VALUE, Long.toString(Long.MAX_VALUE));
-    assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
-    assertParseLong(Long.MAX_VALUE, "00" + Long.toString(Long.MAX_VALUE));
-    assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
+    this.assertParseLong(1, "1");
+    this.assertParseLong(-1, "-1");
+    this.assertParseLong(Long.MAX_VALUE, Long.toString(Long.MAX_VALUE));
+    this.assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
+    this.assertParseLong(Long.MAX_VALUE, "00" + Long.toString(Long.MAX_VALUE));
+    this.assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
   }
 
   @Test
   public void invalidLongs() {
-    assertInvalidLong(null);
-    assertInvalidLong("");
-    assertInvalidLong("+");
-    assertInvalidLong("-");
-    assertInvalidLong("++0");
-    assertInvalidLong("+-0");
-    assertInvalidLong("-+0");
-    assertInvalidLong("--0");
+    this.assertInvalidLong(null);
+    this.assertInvalidLong("");
+    this.assertInvalidLong("+");
+    this.assertInvalidLong("-");
+    this.assertInvalidLong("++0");
+    this.assertInvalidLong("+-0");
+    this.assertInvalidLong("-+0");
+    this.assertInvalidLong("--0");
 
-    assertInvalidLong("0 ");
-    assertInvalidLong(" 0");
-    assertInvalidLong("0a");
-    assertInvalidLong("a0");
-    assertInvalidLong("0/");
-    assertInvalidLong("/0");
-    assertInvalidLong("0:");
-    assertInvalidLong(":0");
+    this.assertInvalidLong("0 ");
+    this.assertInvalidLong(" 0");
+    this.assertInvalidLong("0a");
+    this.assertInvalidLong("a0");
+    this.assertInvalidLong("0/");
+    this.assertInvalidLong("/0");
+    this.assertInvalidLong("0:");
+    this.assertInvalidLong(":0");
 
-    assertInvalidLong("9223372036854775808");
-    assertInvalidLong("19223372036854775807");
-    assertInvalidLong("-9223372036854775809");
-    assertInvalidLong("-19223372036854775808");
+    this.assertInvalidLong("9223372036854775808");
+    this.assertInvalidLong("19223372036854775807");
+    this.assertInvalidLong("-9223372036854775809");
+    this.assertInvalidLong("-19223372036854775808");
   }
 
   private void assertParseInt(int expected, CharSequence charSequence) {
@@ -247,18 +247,18 @@ public class CharSequencesTest {
 
   @Test
   public void trim() {
-    assertTrim("", "");
-    assertTrim("", " ");
-    assertTrim("", "  ");
-    assertTrim("a", "a");
+    this.assertTrim("", "");
+    this.assertTrim("", " ");
+    this.assertTrim("", "  ");
+    this.assertTrim("a", "a");
 
-    assertTrim("a", " a");
-    assertTrim("a", "a ");
-    assertTrim("a", " a ");
+    this.assertTrim("a", " a");
+    this.assertTrim("a", "a ");
+    this.assertTrim("a", " a ");
 
-    assertTrim("a", "  a");
-    assertTrim("a", "a  ");
-    assertTrim("a", "  a  ");
+    this.assertTrim("a", "  a");
+    this.assertTrim("a", "a  ");
+    this.assertTrim("a", "  a  ");
 
     try {
       CharSequences.trim(null);
@@ -301,6 +301,24 @@ public class CharSequencesTest {
   }
 
   @Test
+  public void startsWithBom() {
+    assertFalse(CharSequences.startsWithBom(""));
+    assertFalse(CharSequences.startsWithBom("a"));
+    assertFalse(CharSequences.startsWithBom("\uFFFE"));
+    assertTrue(CharSequences.startsWithBom("\uFEFF"));
+    assertFalse(CharSequences.startsWithBom("\\uFEFF"));
+  }
+
+  @Test
+  public void removeLeadingBom() {
+    assertEquals("", CharSequences.removeLeadingBom(""));
+    assertEquals("a", CharSequences.removeLeadingBom("a"));
+    assertEquals("", CharSequences.removeLeadingBom("\uFEFF"));
+    assertEquals("a", CharSequences.removeLeadingBom("\uFEFFa"));
+    assertEquals("\\uFEFF", CharSequences.removeLeadingBom("\\uFEFF"));
+  }
+
+  @Test
   public void hexDigit() {
     assertEquals(9, CharSequences.hexDigit('9'));
     assertEquals(0, CharSequences.hexDigit('0'));
@@ -309,7 +327,7 @@ public class CharSequencesTest {
     assertEquals(0xf, CharSequences.hexDigit('f'));
     assertEquals(0xF, CharSequences.hexDigit('F'));
 
-    assertEquals(0xAF, CharSequences.hexDigit('A') << 4 | CharSequences.hexDigit('F'));
+    assertEquals(0xAF, (CharSequences.hexDigit('A') << 4) | CharSequences.hexDigit('F'));
   }
 
 }

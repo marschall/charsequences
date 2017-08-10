@@ -9,6 +9,8 @@ import java.util.UUID;
  */
 public final class CharSequences {
 
+  private static final char BOM = '\uFEFF';
+
   private CharSequences() {
     throw new AssertionError("not instantiable");
   }
@@ -31,7 +33,7 @@ public final class CharSequences {
     }
     for (int i = 0; i < length; ++i) {
       char c = charSequence.charAt(i);
-      if (c < '0' || c > '9') {
+      if ((c < '0') || (c > '9')) {
         return false;
       }
     }
@@ -75,7 +77,7 @@ public final class CharSequences {
       start = 0;
     }
 
-    if (length - start == 0) {
+    if ((length - start) == 0) {
       throw invalidDecimalNumber(charSequence);
     }
 
@@ -86,7 +88,7 @@ public final class CharSequences {
     // numbers and negate them
     for (int i = start; i < length; ++i) {
       char c = charSequence.charAt(i);
-      if (c < '0' || c > '9') {
+      if ((c < '0') || (c > '9')) {
         throw invalidDecimalNumber(charSequence);
       }
       int value = c - '0';
@@ -147,7 +149,7 @@ public final class CharSequences {
       start = 0;
     }
 
-    if (length - start == 0) {
+    if ((length - start) == 0) {
       throw invalidDecimalNumber(charSequence);
     }
 
@@ -158,7 +160,7 @@ public final class CharSequences {
     // numbers and negate them
     for (int i = start; i < length; ++i) {
       char c = charSequence.charAt(i);
-      if (c < '0' || c > '9') {
+      if ((c < '0') || (c > '9')) {
         throw invalidDecimalNumber(charSequence);
       }
       int value = c - '0';
@@ -271,7 +273,7 @@ public final class CharSequences {
   public static int indexOf(CharSequence charSequence, String subSequence) {
     int sequenceLength = charSequence.length();
     int subSequenceLength = subSequence.length();
-    charLoop : for (int i = 0; i <= sequenceLength - subSequenceLength; ++i) {
+    charLoop : for (int i = 0; i <= (sequenceLength - subSequenceLength); ++i) {
       for (int j = 0; j < subSequenceLength; ++j) {
         if (charSequence.charAt(i + j) != subSequence.charAt(j)) {
           continue charLoop;
@@ -320,7 +322,7 @@ public final class CharSequences {
 
     if (length == 0) {
       return "";
-    } else if (start == 0 && end == length) {
+    } else if ((start == 0) && (end == length)) {
       return charSequence;
     } else {
       return charSequence.subSequence(start, end);
@@ -346,6 +348,33 @@ public final class CharSequences {
   }
 
   /**
+   * Checks if a sequence starts with a <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="BOM">byte order mark</a>.
+   *
+   * @param charSequence the CharSequence to check, not {@code null}
+   * @return if a sequence starts with a BOM
+   */
+  public static boolean startsWithBom(CharSequence charSequence) {
+    return (charSequence.length() > 0) && (charSequence.charAt(0) == BOM);
+  }
+
+  /**
+   * Removes a leading
+   * <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="BOM">byte order mark</a>
+   * from a sequence if present.
+   *
+   * @param charSequence the CharSequence from which to remove the BOM, not {@code null}
+   * @return a subsequence with the leading BOM removed
+   *         the same sequence if the first character is not a BOM
+   *         or the sequence is empty
+   */
+  public static CharSequence removeLeadingBom(CharSequence charSequence) {
+    if (!startsWithBom(charSequence)) {
+      return charSequence;
+    }
+    return charSequence.subSequence(1, charSequence.length());
+  }
+
+  /**
    * Creates a UUID from a {@link CharSequence} like {@link UUID#fromString(String)}
    *
    * @implNote unlike {@link UUID#fromString(String)} performs no allocation
@@ -365,14 +394,14 @@ public final class CharSequences {
     if (name.length() != 36) {
       throw new IllegalArgumentException("Invalid UUID string: " + name);
     }
-    if (name.charAt(8) != '-' || name.charAt(13) != '-' || name.charAt(18) != '-' || name.charAt(23) != '-') {
+    if ((name.charAt(8) != '-') || (name.charAt(13) != '-') || (name.charAt(18) != '-') || (name.charAt(23) != '-')) {
       throw new IllegalArgumentException("Invalid UUID string: " + name);
     }
     long mostSigBits = 0L;
     long leastSigBits = 0;
 
     for (int i = 0; i < 18; ++i) {
-      if (i == 8 || i == 13) {
+      if ((i == 8) || (i == 13)) {
         continue;
       }
       int digit = hexDigit(name.charAt(i));
@@ -391,14 +420,14 @@ public final class CharSequences {
   }
 
   static int hexDigit(char c) {
-    if (c >= '0' && c <= '9') {
+    if ((c >= '0') && (c <= '9')) {
       return c - '0';
     }
-    if (c >= 'a' && c <= 'f') {
-      return c - 'a' + 10;
+    if ((c >= 'a') && (c <= 'f')) {
+      return (c - 'a') + 10;
     }
-    if (c >= 'A' && c <= 'F') {
-      return c - 'A' + 10;
+    if ((c >= 'A') && (c <= 'F')) {
+      return (c - 'A') + 10;
     }
     throw new IllegalArgumentException();
   }
@@ -444,7 +473,7 @@ public final class CharSequences {
 
     @Override
     public CharSequence next() {
-      if (!hasNext()) {
+      if (!this.hasNext()) {
         throw new NoSuchElementException();
       }
       CharSequence next = this.charSequence.subSequence(this.nextStart, this.nextEnd);
@@ -470,8 +499,6 @@ public final class CharSequences {
         return end;
       }
     }
-
-
 
   }
 
