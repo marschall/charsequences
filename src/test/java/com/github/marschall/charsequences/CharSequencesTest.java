@@ -57,6 +57,22 @@ public class CharSequencesTest {
   }
 
   @Test
+  public void parseIntSubIndices() {
+    assertEquals(2, CharSequences.parseInt("123", 1, 2));
+    assertEquals(2, CharSequences.parseInt("1+23", 1, 3));
+    assertEquals(-2, CharSequences.parseInt("1-23", 1, 3));
+    assertEquals(2, CharSequences.parseInt("1-23", 2, 3));
+  }
+
+  @Test
+  public void parseLongSubIndices() {
+    assertEquals(2L, CharSequences.parseLong("123", 1, 2));
+    assertEquals(2L, CharSequences.parseLong("1+23", 1, 3));
+    assertEquals(-2L, CharSequences.parseLong("1-23", 1, 3));
+    assertEquals(2L, CharSequences.parseLong("1-23", 2, 3));
+  }
+
+  @Test
   public void invalidInts() {
     this.assertInvalidInt(null);
     this.assertInvalidInt("");
@@ -79,6 +95,13 @@ public class CharSequencesTest {
     this.assertInvalidInt(Long.toString(Integer.MAX_VALUE + 1L));
     this.assertInvalidInt("1" + Long.toString(Integer.MAX_VALUE + 1L));
     this.assertInvalidInt("-12" + Long.toString(Integer.MIN_VALUE - 1L).substring(1));
+  }
+
+  @Test
+  public void invalidIntArguments() {
+    this.assertInvalidIntArgument("1234567890", -1, 1);
+    this.assertInvalidIntArgument("1234567890", 2, 1);
+    this.assertInvalidIntArgument("1234567890", 1, 11);
   }
 
   @Test
@@ -130,9 +153,34 @@ public class CharSequencesTest {
     this.assertInvalidLong("-19223372036854775808");
   }
 
+  @Test
+  public void invalidLongArguments() {
+    this.assertInvalidLongArgument("1234567890", -1, 1);
+    this.assertInvalidLongArgument("1234567890", 2, 1);
+    this.assertInvalidLongArgument("1234567890", 1, 11);
+  }
+
   private void assertParseInt(int expected, CharSequence charSequence) {
     assertEquals(expected, CharSequences.parseInt(charSequence));
     assertEquals(expected, Integer.parseInt(charSequence.toString()));
+  }
+
+  private void assertInvalidIntArgument(CharSequence charSequence, int beginIndex, int endIndex) {
+    try {
+      CharSequences.parseInt(charSequence, beginIndex, endIndex);
+      fail("should be invalid \"" + charSequence + "\"");
+    } catch (IndexOutOfBoundsException e) {
+      // should reach here
+    }
+  }
+
+  private void assertInvalidLongArgument(CharSequence charSequence, int beginIndex, int endIndex) {
+    try {
+      CharSequences.parseLong(charSequence, beginIndex, endIndex);
+      fail("should be invalid \"" + charSequence + "\"");
+    } catch (IndexOutOfBoundsException e) {
+      // should reach here
+    }
   }
 
   private void assertInvalidInt(CharSequence charSequence) {

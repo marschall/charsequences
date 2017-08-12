@@ -48,36 +48,44 @@ public final class CharSequences {
    * @param charSequence the {@code CharSequence} containing the {@code int}
    *   representation to be parsed, {@code null} will cause a
    *   {@code NumberFormatException} to be thrown
+   * @param beginIndex the inclusive index at which to star
+   * @param endIndex the exclusive index at which to end
    * @return the integer value represented by the argument in decimal
    * @throws NumberFormatException if the charSequence does not
    *   contain a parsable int
+   * @throws IndexOutOfBoundsException if beginIndex is less than endIndex,
+   *         if beginIndex is negative or if endIndex is bigger than the length of charSequence
    * @see Integer#parseInt(String)
    * @see #isNumeric(CharSequence)
    */
-  public static int parseInt(CharSequence charSequence) {
+  public static int parseInt(CharSequence charSequence, int beginIndex, int endIndex) {
     if (charSequence == null) {
       throw new NumberFormatException("null");
     }
-    int length = charSequence.length();
+    if ((endIndex < beginIndex) || (beginIndex < 0) || (endIndex > charSequence.length())) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    int length = endIndex - beginIndex;
     if (length == 0) {
       throw invalidDecimalNumber(charSequence);
     }
 
-    char first = charSequence.charAt(0);
+    char first = charSequence.charAt(beginIndex);
     int start;
     boolean negative;
     if (first == '-') {
       negative = true;
-      start = 1;
+      start = beginIndex + 1;
     } else if (first == '+') {
       negative = false;
-      start = 1;
+      start = beginIndex + 1;
     } else {
       negative = false;
-      start = 0;
+      start = beginIndex;
     }
 
-    if ((length - start) == 0) {
+    if ((endIndex - start) == 0) {
       throw invalidDecimalNumber(charSequence);
     }
 
@@ -86,7 +94,7 @@ public final class CharSequences {
     // Integer.MAX_VALUE has a negative representation
     // so build negative numbers and negate those rather than build positive
     // numbers and negate them
-    for (int i = start; i < length; ++i) {
+    for (int i = start; i < endIndex; ++i) {
       char c = charSequence.charAt(i);
       if ((c < '0') || (c > '9')) {
         throw invalidDecimalNumber(charSequence);
@@ -110,7 +118,31 @@ public final class CharSequences {
         throw invalidDecimalNumber(charSequence);
       }
     }
+
   }
+
+  /**
+   * Parses a given char sequence compatible to {@link Integer#parseInt(String)}.
+   *
+   * @implNote no allocation is performed
+   * @implNote performance can be 35% to 50% better than Integer#parseInt(String)
+   * @param charSequence the {@code CharSequence} containing the {@code int}
+   *   representation to be parsed, {@code null} will cause a
+   *   {@code NumberFormatException} to be thrown
+   * @return the integer value represented by the argument in decimal
+   * @throws NumberFormatException if the charSequence does not
+   *   contain a parsable int
+   * @see Integer#parseInt(String)
+   * @see #isNumeric(CharSequence)
+   */
+  public static int parseInt(CharSequence charSequence) {
+    if (charSequence == null) {
+      throw new NumberFormatException("null");
+    }
+    return parseInt(charSequence, 0, charSequence.length());
+  }
+
+
 
   /**
    * Parses a given char sequence compatible to {@link Long#parseLong(String)}.
@@ -130,26 +162,54 @@ public final class CharSequences {
     if (charSequence == null) {
       throw new NumberFormatException("null");
     }
-    int length = charSequence.length();
+    return parseLong(charSequence, 0, charSequence.length());
+  }
+
+  /**
+   * Parses a given char sequence compatible to {@link Long#parseLong(String)}.
+   *
+   * @implNote no allocation is performed
+   * @implNote performance can be 20% to 50% better than Long#parseLong(String)
+   * @param charSequence the {@code CharSequence} containing the {@code long}
+   *   representation to be parsed, {@code null} will cause a
+   *   {@code NumberFormatException} to be thrown
+   * @param beginIndex the inclusive index at which to star
+   * @param endIndex the exclusive index at which to end
+   * @return the long value represented by the argument in decimal
+   * @throws NumberFormatException if the charSequence does not
+   *   contain a parsable long
+   * @throws IndexOutOfBoundsException if beginIndex is less than endIndex,
+   *         if beginIndex is negative or if endIndex is bigger than the length of charSequence
+   * @see Long#parseLong
+   * @see #isNumeric(CharSequence)
+   */
+  public static long parseLong(CharSequence charSequence, int beginIndex, int endIndex) {
+    if (charSequence == null) {
+      throw new NumberFormatException("null");
+    }
+    if ((endIndex < beginIndex) || (beginIndex < 0) || (endIndex > charSequence.length())) {
+      throw new IndexOutOfBoundsException();
+    }
+    int length = endIndex - beginIndex;
     if (length == 0) {
       throw invalidDecimalNumber(charSequence);
     }
 
-    char first = charSequence.charAt(0);
+    char first = charSequence.charAt(beginIndex);
     int start;
     boolean negative;
     if (first == '-') {
       negative = true;
-      start = 1;
+      start = beginIndex + 1;
     } else if (first == '+') {
       negative = false;
-      start = 1;
+      start = beginIndex + 1;
     } else {
       negative = false;
-      start = 0;
+      start = beginIndex;
     }
 
-    if ((length - start) == 0) {
+    if ((endIndex - start) == 0) {
       throw invalidDecimalNumber(charSequence);
     }
 
@@ -158,7 +218,7 @@ public final class CharSequences {
     // Long.MAX_VALUE has a negative representation
     // so build negative numbers and negate those rather than build positive
     // numbers and negate them
-    for (int i = start; i < length; ++i) {
+    for (int i = start; i < endIndex; ++i) {
       char c = charSequence.charAt(i);
       if ((c < '0') || (c > '9')) {
         throw invalidDecimalNumber(charSequence);
@@ -348,7 +408,8 @@ public final class CharSequences {
   }
 
   /**
-   * Checks if a sequence starts with a <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="BOM">byte order mark</a>.
+   * Checks if a sequence starts with a
+   * <a href="https://en.wikipedia.org/wiki/Byte_order_mark">byte order mark</a>.
    *
    * @param charSequence the CharSequence to check, not {@code null}
    * @return if a sequence starts with a BOM
@@ -359,7 +420,7 @@ public final class CharSequences {
 
   /**
    * Removes a leading
-   * <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="BOM">byte order mark</a>
+   * <a href="https://en.wikipedia.org/wiki/Byte_order_mark">byte order mark</a>
    * from a sequence if present.
    *
    * @param charSequence the CharSequence from which to remove the BOM, not {@code null}
