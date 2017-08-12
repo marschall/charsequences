@@ -537,9 +537,18 @@ public final class CharSequences {
       if (!this.hasNext()) {
         throw new NoSuchElementException();
       }
-      CharSequence next = this.charSequence.subSequence(this.nextStart, this.nextEnd);
-      this.nextStart = this.nextEnd + 1;
+      int nextLength = this.nextEnd - this.nextStart;
+
+      CharSequence next;
+      if (nextLength == 0) {
+        // avoid allocation of an empty sequence
+        next = "";
+      } else {
+        next = this.charSequence.subSequence(this.nextStart, this.nextEnd);
+      }
+      this.nextStart = this.nextEnd + 1; // skip the delimiter
       if (this.nextStart > this.charSequence.length()) {
+        // end is reached
         this.nextStart = -1;
       } else {
         this.nextEnd = this.findEnd();
