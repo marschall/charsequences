@@ -17,8 +17,8 @@ When dealing with [CharSequence](https://docs.oracle.com/javase/8/docs/api/java/
  - [indexOf(char, int)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#indexOf-int-int-)
  - [contains(CharSequence)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#contains-java.lang.CharSequence-)
  - [trim()](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#trim--)
- - [Integer.parseInt(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-)
- - [Long.parseLong(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html#parseLong-java.lang.String-)
+ - [Integer.parseInt(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-), no longer needed in Java 9
+ - [Long.parseLong(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html#parseLong-java.lang.String-), no longer needed in Java 9
  - [String.split(String)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-), limited, only a single character is allowed, not a full regex
  - [UUID.fromString(String)](https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#fromString-java.lang.String-), no intermediary allocation
  
