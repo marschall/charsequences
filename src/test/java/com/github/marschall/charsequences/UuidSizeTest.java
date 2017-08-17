@@ -34,7 +34,7 @@ public class UuidSizeTest {
         }
       }
     }
-    assertEquals(24L, VM.current().sizeOf(s));
+    assertEquals(24L, this.vm.sizeOf(s));
     assertEquals(112L, 24L + 88L);
   }
 
