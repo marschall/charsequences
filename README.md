@@ -1,4 +1,4 @@
-CharSequences [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.marschall/charsequences/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.marschall/charsequences) [![Javadocs](http://www.javadoc.io/badge/com.github.marschall/charsequences.svg)](http://www.javadoc.io/doc/com.github.marschall/charsequences) [![Build Status](https://travis-ci.org/marschall/charsequences.svg?branch=master)](https://travis-ci.org/marschall/charsequences)
+CharSequences [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.marschall/charsequences/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.marschall/charsequences) [![Javadocs](https://www.javadoc.io/badge/com.github.marschall/charsequences.svg)](https://www.javadoc.io/doc/com.github.marschall/charsequences) [![Build Status](https://travis-ci.org/marschall/charsequences.svg?branch=master)](https://travis-ci.org/marschall/charsequences)
 =============
 
 Utility methods for dealing with `java.lang.CharSequence`. 
