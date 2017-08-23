@@ -453,10 +453,10 @@ public final class CharSequences {
    */
   public static UUID uuidFromCharSequence(CharSequence name) {
     if (name.length() != 36) {
-      throw new IllegalArgumentException("Invalid UUID string: " + name);
+      throw invalidUuid(name);
     }
     if ((name.charAt(8) != '-') || (name.charAt(13) != '-') || (name.charAt(18) != '-') || (name.charAt(23) != '-')) {
-      throw new IllegalArgumentException("Invalid UUID string: " + name);
+      throw invalidUuid(name);
     }
     long mostSigBits = 0L;
     long leastSigBits = 0;
@@ -488,15 +488,25 @@ public final class CharSequences {
     return new UUID(mostSigBits, leastSigBits);
   }
 
+  private static IllegalArgumentException invalidUuid(CharSequence name) {
+    return new IllegalArgumentException("Invalid UUID string: " + name);
+  }
+
   static int hexDigit(char c) {
     if ((c >= '0') && (c <= '9')) {
       return c - '0';
     }
     if ((c >= 'a') && (c <= 'f')) {
-      return (c - 'a') + 10;
+      // manually constant fold to avoid running into inlining limits
+      // (c - 'a') + 10
+      // a = 97
+      return c - 87;
     }
     if ((c >= 'A') && (c <= 'F')) {
-      return (c - 'A') + 10;
+      // manually constant fold to avoid running into inlining limits
+      // (c - 'A') + 10
+      // A = 65
+      return c - 55;
     }
     throw new IllegalArgumentException();
   }
