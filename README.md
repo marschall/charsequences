@@ -7,7 +7,7 @@ Utility methods for dealing with `java.lang.CharSequence`.
 <dependency>
     <groupId>com.github.marschall</groupId>
     <artifactId>charsequences</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
