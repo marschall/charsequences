@@ -1,11 +1,11 @@
 package com.github.marschall.charsequences;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
 import org.openjdk.jol.vm.VM;
@@ -15,7 +15,7 @@ public class UuidSizeTest {
 
   private VirtualMachine vm;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     this.vm = VM.current();
   }
@@ -28,9 +28,9 @@ public class UuidSizeTest {
       if (field.typeClass().endsWith("[]")) {
         Object fieldValue = this.vm.getObject(s, field.offset());
         if (isJava9OrLater()) {
-          assertEquals("size of Stirng.value", 56L, this.vm.sizeOf(fieldValue));
+          assertEquals(56L, this.vm.sizeOf(fieldValue), "size of Stirng.value");
         } else {
-          assertEquals("size of Stirng.value", 88L, this.vm.sizeOf(fieldValue));
+          assertEquals(88L, this.vm.sizeOf(fieldValue), "size of Stirng.value");
         }
       }
     }
