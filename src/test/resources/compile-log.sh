@@ -1,0 +1,1 @@
+java -XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+LogCompilation -XX:+PrintAssembly -XX:LogFile=compilation8graal.log -cp charsequences-0.5.2-SNAPSHOT-jar-with-test-dependencies.jar com.github.marschall.charsequences.ParseUuidCompilation

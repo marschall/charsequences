@@ -463,25 +463,25 @@ public final class CharSequences {
 
     // manually unroll the first loop, helps 10% to 20% on C2
     for (int i = 0; i < 8; ++i) {
-      int digit = hexDigit(name.charAt(i));
+      long digit = hexDigit(name.charAt(i));
       mostSigBits = (mostSigBits << 4) | digit;
     }
     for (int i = 9; i < 13; ++i) {
-      int digit = hexDigit(name.charAt(i));
+      long digit = hexDigit(name.charAt(i));
       mostSigBits = (mostSigBits << 4) | digit;
     }
     for (int i = 14; i < 18; ++i) {
-      int digit = hexDigit(name.charAt(i));
+      long digit = hexDigit(name.charAt(i));
       mostSigBits = (mostSigBits << 4) | digit;
     }
 
     // manually unroll the second loop, helps 10% to 20% on C2
     for (int i = 19; i < 23; ++i) {
-      int digit = hexDigit(name.charAt(i));
+      long digit = hexDigit(name.charAt(i));
       leastSigBits = (leastSigBits << 4) | digit;
     }
     for (int i = 24; i < 36; ++i) {
-      int digit = hexDigit(name.charAt(i));
+      long digit = hexDigit(name.charAt(i));
       leastSigBits = (leastSigBits << 4) | digit;
     }
 
@@ -492,7 +492,7 @@ public final class CharSequences {
     return new IllegalArgumentException("Invalid UUID string: " + name);
   }
 
-  static int hexDigit(char c) {
+  static long hexDigit(char c) {
     if ((c >= '0') && (c <= '9')) {
       return c - '0';
     }
