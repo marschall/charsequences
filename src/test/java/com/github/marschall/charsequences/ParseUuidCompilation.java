@@ -8,7 +8,7 @@ public class ParseUuidCompilation {
 
   public ParseUuidCompilation() {
 
-    for (int i = 0; i < 1_000_000; i++) {
+    for (int i = 0; i < 10_000_000; i++) {
       UUID u = this.parse();
       if (System.identityHashCode(u) == 1) {
         System.out.println("X");
