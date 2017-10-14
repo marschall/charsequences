@@ -1,8 +1,10 @@
 package com.github.marschall.charsequences;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LuhnCheckTest {
 
@@ -19,9 +21,9 @@ public class LuhnCheckTest {
     assertFalse(LuhnCheck.isValid("374648856525766"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void exception() {
-    LuhnCheck.isValid("5116 3711 4643 4084");
+    assertThrows(IllegalArgumentException.class, () -> LuhnCheck.isValid("5116 3711 4643 4084"));
   }
 
 }

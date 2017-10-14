@@ -1,10 +1,10 @@
 package com.github.marschall.charsequences;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CharSequencesTest {
 
@@ -287,7 +287,7 @@ public class CharSequencesTest {
   public void subSequenceBetween() {
     assertEquals("20.5K", CharSequencesTest.subSequenceBetween("116.9K->96.4K(20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
     assertEquals("", CharSequencesTest.subSequenceBetween("116.9K->96.4K(), avg 17.5%, 0.0018690 secs", '(', ')'));
-    assertNull("20.5K", CharSequencesTest.subSequenceBetween("116.9K->96.4K)(, avg 17.5%, 0.0018690 secs", '(', ')'));
+    assertNull(CharSequencesTest.subSequenceBetween("116.9K->96.4K)(, avg 17.5%, 0.0018690 secs", '(', ')'));
 
     assertNull(CharSequencesTest.subSequenceBetween("116.9K->96.4K(20.5K", '(', ')'));
     assertNull(CharSequencesTest.subSequenceBetween("20.5K), avg 17.5%, 0.0018690 secs", '(', ')'));
