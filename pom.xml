@@ -4,7 +4,7 @@
 
   <groupId>com.github.marschall</groupId>
   <artifactId>charsequences</artifactId>
-  <version>0.5.2-SNAPSHOT</version>
+  <version>0.5.3-SNAPSHOT</version>
   <inceptionYear>2016</inceptionYear>
   <url>https://github.com/marschall/charsequences</url>
   <name>CharSequences</name>
@@ -84,6 +84,16 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <version>${junit.platform.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
