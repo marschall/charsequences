@@ -227,7 +227,8 @@ public final class CharSequences {
       try {
         // JMH microbenchmarks have shown that performance of exact methods
         // is equal or better than manual overflow checks for normal cases without overflow
-        product = Math.subtractExact(Math.multiplyExact(product, 10), value);
+        // on Java 11+ use multiplyExact(JI)J
+        product = Math.subtractExact(Math.multiplyExact(product, 10L), value);
       } catch (ArithmeticException e) {
         throw invalidDecimalNumber(charSequence);
       }
