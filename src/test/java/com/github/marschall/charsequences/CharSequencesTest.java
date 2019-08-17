@@ -3,8 +3,8 @@ package com.github.marschall.charsequences;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,25 +35,25 @@ public class CharSequencesTest {
 
   @Test
   public void validInts() {
-    this.assertParseInt(0, "+0");
-    this.assertParseInt(0, "-0");
-    this.assertParseInt(0, "0");
+    assertParseInt(0, "+0");
+    assertParseInt(0, "-0");
+    assertParseInt(0, "0");
 
-    this.assertParseInt(0, "00");
-    this.assertParseInt(1, "01");
+    assertParseInt(0, "00");
+    assertParseInt(1, "01");
     // more 0 than Integer.MAX_VALUE has places
-    this.assertParseInt(1, "000000000001");
-    this.assertParseInt(0, "+00");
-    this.assertParseInt(1, "+01");
-    this.assertParseInt(0, "-00");
-    this.assertParseInt(-1, "-01");
+    assertParseInt(1, "000000000001");
+    assertParseInt(0, "+00");
+    assertParseInt(1, "+01");
+    assertParseInt(0, "-00");
+    assertParseInt(-1, "-01");
 
-    this.assertParseInt(1, "1");
-    this.assertParseInt(-1, "-1");
-    this.assertParseInt(Integer.MAX_VALUE, Integer.toString(Integer.MAX_VALUE));
-    this.assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
-    this.assertParseInt(Integer.MAX_VALUE, "00" + Integer.toString(Integer.MAX_VALUE));
-    this.assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
+    assertParseInt(1, "1");
+    assertParseInt(-1, "-1");
+    assertParseInt(Integer.MAX_VALUE, Integer.toString(Integer.MAX_VALUE));
+    assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
+    assertParseInt(Integer.MAX_VALUE, "00" + Integer.toString(Integer.MAX_VALUE));
+    assertParseInt(Integer.MIN_VALUE, Integer.toString(Integer.MIN_VALUE));
   }
 
   @Test
@@ -74,171 +74,155 @@ public class CharSequencesTest {
 
   @Test
   public void invalidInts() {
-    this.assertInvalidInt(null);
-    this.assertInvalidInt("");
-    this.assertInvalidInt("+");
-    this.assertInvalidInt("-");
-    this.assertInvalidInt("++0");
-    this.assertInvalidInt("+-0");
-    this.assertInvalidInt("-+0");
-    this.assertInvalidInt("--0");
+    assertInvalidInt(null);
+    assertInvalidInt("");
+    assertInvalidInt("+");
+    assertInvalidInt("-");
+    assertInvalidInt("++0");
+    assertInvalidInt("+-0");
+    assertInvalidInt("-+0");
+    assertInvalidInt("--0");
 
-    this.assertInvalidInt("0 ");
-    this.assertInvalidInt(" 0");
-    this.assertInvalidInt("0a");
-    this.assertInvalidInt("a0");
-    this.assertInvalidInt("0/");
-    this.assertInvalidInt("/0");
-    this.assertInvalidInt("0:");
-    this.assertInvalidInt(":0");
+    assertInvalidInt("0 ");
+    assertInvalidInt(" 0");
+    assertInvalidInt("0a");
+    assertInvalidInt("a0");
+    assertInvalidInt("0/");
+    assertInvalidInt("/0");
+    assertInvalidInt("0:");
+    assertInvalidInt(":0");
 
-    this.assertInvalidInt(Long.toString(Integer.MAX_VALUE + 1L));
-    this.assertInvalidInt("1" + Long.toString(Integer.MAX_VALUE + 1L));
-    this.assertInvalidInt("-12" + Long.toString(Integer.MIN_VALUE - 1L).substring(1));
+    assertInvalidInt(Long.toString(Integer.MAX_VALUE + 1L));
+    assertInvalidInt("1" + Long.toString(Integer.MAX_VALUE + 1L));
+    assertInvalidInt("-12" + Long.toString(Integer.MIN_VALUE - 1L).substring(1));
   }
 
   @Test
   public void invalidIntArguments() {
-    this.assertInvalidIntArgument("1234567890", -1, 1);
-    this.assertInvalidIntArgument("1234567890", 2, 1);
-    this.assertInvalidIntArgument("1234567890", 1, 11);
+    assertInvalidIntArgument("1234567890", -1, 1);
+    assertInvalidIntArgument("1234567890", 2, 1);
+    assertInvalidIntArgument("1234567890", 1, 11);
   }
 
   @Test
   public void validLongs() {
-    this.assertParseLong(0, "+0");
-    this.assertParseLong(0, "-0");
-    this.assertParseLong(0, "0");
+    assertParseLong(0, "+0");
+    assertParseLong(0, "-0");
+    assertParseLong(0, "0");
 
-    this.assertParseLong(0, "00");
-    this.assertParseLong(1, "01");
+    assertParseLong(0, "00");
+    assertParseLong(1, "01");
     // more 0 than Long.MAX_VALUE has places
-    this.assertParseLong(1, "0000000000000000000001");
-    this.assertParseLong(0, "+00");
-    this.assertParseLong(1, "+01");
-    this.assertParseLong(0, "-00");
-    this.assertParseLong(-1, "-01");
+    assertParseLong(1, "0000000000000000000001");
+    assertParseLong(0, "+00");
+    assertParseLong(1, "+01");
+    assertParseLong(0, "-00");
+    assertParseLong(-1, "-01");
 
-    this.assertParseLong(1, "1");
-    this.assertParseLong(-1, "-1");
-    this.assertParseLong(Long.MAX_VALUE, Long.toString(Long.MAX_VALUE));
-    this.assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
-    this.assertParseLong(Long.MAX_VALUE, "00" + Long.toString(Long.MAX_VALUE));
-    this.assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
+    assertParseLong(1, "1");
+    assertParseLong(-1, "-1");
+    assertParseLong(Long.MAX_VALUE, Long.toString(Long.MAX_VALUE));
+    assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
+    assertParseLong(Long.MAX_VALUE, "00" + Long.toString(Long.MAX_VALUE));
+    assertParseLong(Long.MIN_VALUE, Long.toString(Long.MIN_VALUE));
   }
 
   @Test
   public void invalidLongs() {
-    this.assertInvalidLong(null);
-    this.assertInvalidLong("");
-    this.assertInvalidLong("+");
-    this.assertInvalidLong("-");
-    this.assertInvalidLong("++0");
-    this.assertInvalidLong("+-0");
-    this.assertInvalidLong("-+0");
-    this.assertInvalidLong("--0");
+    assertInvalidLong(null);
+    assertInvalidLong("");
+    assertInvalidLong("+");
+    assertInvalidLong("-");
+    assertInvalidLong("++0");
+    assertInvalidLong("+-0");
+    assertInvalidLong("-+0");
+    assertInvalidLong("--0");
 
-    this.assertInvalidLong("0 ");
-    this.assertInvalidLong(" 0");
-    this.assertInvalidLong("0a");
-    this.assertInvalidLong("a0");
-    this.assertInvalidLong("0/");
-    this.assertInvalidLong("/0");
-    this.assertInvalidLong("0:");
-    this.assertInvalidLong(":0");
+    assertInvalidLong("0 ");
+    assertInvalidLong(" 0");
+    assertInvalidLong("0a");
+    assertInvalidLong("a0");
+    assertInvalidLong("0/");
+    assertInvalidLong("/0");
+    assertInvalidLong("0:");
+    assertInvalidLong(":0");
 
-    this.assertInvalidLong("9223372036854775808");
-    this.assertInvalidLong("19223372036854775807");
-    this.assertInvalidLong("-9223372036854775809");
-    this.assertInvalidLong("-19223372036854775808");
+    assertInvalidLong("9223372036854775808");
+    assertInvalidLong("19223372036854775807");
+    assertInvalidLong("-9223372036854775809");
+    assertInvalidLong("-19223372036854775808");
   }
 
   @Test
   public void invalidLongArguments() {
-    this.assertInvalidLongArgument("1234567890", -1, 1);
-    this.assertInvalidLongArgument("1234567890", 2, 1);
-    this.assertInvalidLongArgument("1234567890", 1, 11);
+    assertInvalidLongArgument("1234567890", -1, 1);
+    assertInvalidLongArgument("1234567890", 2, 1);
+    assertInvalidLongArgument("1234567890", 1, 11);
   }
 
-  private void assertParseInt(int expected, CharSequence charSequence) {
+  private static void assertParseInt(int expected, CharSequence charSequence) {
     assertEquals(expected, CharSequences.parseInt(charSequence));
     assertEquals(expected, Integer.parseInt(charSequence.toString()));
   }
 
-  private void assertInvalidIntArgument(CharSequence charSequence, int beginIndex, int endIndex) {
-    try {
-      CharSequences.parseInt(charSequence, beginIndex, endIndex);
-      fail("should be invalid \"" + charSequence + "\"");
-    } catch (IndexOutOfBoundsException e) {
-      // should reach here
+  private static void assertInvalidIntArgument(CharSequence charSequence, int beginIndex, int endIndex) {
+    assertThrows(IndexOutOfBoundsException.class,
+            () -> CharSequences.parseInt(charSequence, beginIndex, endIndex),
+            "should be invalid \"" + charSequence + "\"");
+  }
+
+  private static void assertInvalidLongArgument(CharSequence charSequence, int beginIndex, int endIndex) {
+    assertThrows(IndexOutOfBoundsException.class,
+            () -> CharSequences.parseLong(charSequence, beginIndex, endIndex),
+            "should be invalid \"" + charSequence + "\"");
+  }
+
+  private static void assertInvalidInt(CharSequence charSequence) {
+    NumberFormatException exception = assertThrows(NumberFormatException.class,
+            () -> CharSequences.parseInt(charSequence),
+            "should be invalid \"" + charSequence + "\"");
+    String exceptionMessage = exception.getMessage();
+    if (charSequence != null) {
+      assertTrue(exceptionMessage.contains(charSequence));
+    } else {
+      assertTrue(exceptionMessage.contains("null"));
+    }
+
+    exception = assertThrows(NumberFormatException.class,
+            () -> Integer.parseInt(charSequence != null ? charSequence.toString() : null),
+            "should be invalid \"" + charSequence + "\"");
+    exceptionMessage = exception.getMessage();
+    if (charSequence != null) {
+      assertTrue(exceptionMessage.contains(charSequence));
+    } else {
+      assertTrue(exceptionMessage.contains("null"));
     }
   }
 
-  private void assertInvalidLongArgument(CharSequence charSequence, int beginIndex, int endIndex) {
-    try {
-      CharSequences.parseLong(charSequence, beginIndex, endIndex);
-      fail("should be invalid \"" + charSequence + "\"");
-    } catch (IndexOutOfBoundsException e) {
-      // should reach here
-    }
-  }
-
-  private void assertInvalidInt(CharSequence charSequence) {
-    try {
-      CharSequences.parseInt(charSequence);
-      fail("should be invalid \"" + charSequence + "\"");
-    } catch (NumberFormatException e) {
-      if (charSequence != null) {
-        assertTrue(e.getMessage().contains(charSequence));
-      } else {
-        assertTrue(e.getMessage().contains("null"));
-      }
-    }
-    try {
-      if (charSequence != null) {
-        Integer.parseInt(charSequence.toString());
-      } else {
-        Integer.parseInt(null);
-      }
-      fail("should be invalid \"" + charSequence + "\"");
-    } catch (NumberFormatException e) {
-      if (charSequence != null) {
-        assertTrue(e.getMessage().contains(charSequence));
-      } else {
-        assertTrue(e.getMessage().contains("null"));
-      }
-    }
-  }
-
-  private void assertParseLong(long expected, CharSequence charSequence) {
+  private static void assertParseLong(long expected, CharSequence charSequence) {
     assertEquals(expected, CharSequences.parseLong(charSequence));
     assertEquals(expected, Long.parseLong(charSequence.toString()));
   }
 
-  private void assertInvalidLong(CharSequence charSequence) {
-    try {
-      CharSequences.parseLong(charSequence);
-      fail("should be invalid \"" + charSequence + "\"");
-    } catch (NumberFormatException e) {
-      if (charSequence != null) {
-        assertTrue(e.getMessage().contains(charSequence));
-      } else {
-        assertTrue(e.getMessage().contains("null"));
-      }
+  private static void assertInvalidLong(CharSequence charSequence) {
+    NumberFormatException exception = assertThrows(NumberFormatException.class,
+            () -> CharSequences.parseLong(charSequence),
+            "should be invalid \"" + charSequence + "\"");
+    String exceptionMessage = exception.getMessage();
+    if (charSequence != null) {
+      assertTrue(exceptionMessage.contains(charSequence));
+    } else {
+      assertTrue(exceptionMessage.contains("null"));
     }
-    try {
-      if (charSequence != null) {
-        Long.parseLong(charSequence.toString());
-      } else {
-        Long.parseLong(null);
-      }
-      fail("should be invalid \"" + charSequence + "\"");
-    } catch (NumberFormatException e) {
-      if (charSequence != null) {
-        assertTrue(e.getMessage().contains(charSequence));
-      } else {
-        assertTrue(e.getMessage().contains("null"));
-      }
+
+    exception = assertThrows(NumberFormatException.class,
+            () -> Long.parseLong(charSequence != null ? charSequence.toString() : null),
+            "should be invalid \"" + charSequence + "\"");
+    exceptionMessage = exception.getMessage();
+    if (charSequence != null) {
+      assertTrue(exceptionMessage.contains(charSequence));
+    } else {
+      assertTrue(exceptionMessage.contains("null"));
     }
   }
 
@@ -295,28 +279,23 @@ public class CharSequencesTest {
 
   @Test
   public void trim() {
-    this.assertTrim("", "");
-    this.assertTrim("", " ");
-    this.assertTrim("", "  ");
-    this.assertTrim("a", "a");
+    assertTrim("", "");
+    assertTrim("", " ");
+    assertTrim("", "  ");
+    assertTrim("a", "a");
 
-    this.assertTrim("a", " a");
-    this.assertTrim("a", "a ");
-    this.assertTrim("a", " a ");
+    assertTrim("a", " a");
+    assertTrim("a", "a ");
+    assertTrim("a", " a ");
 
-    this.assertTrim("a", "  a");
-    this.assertTrim("a", "a  ");
-    this.assertTrim("a", "  a  ");
+    assertTrim("a", "  a");
+    assertTrim("a", "a  ");
+    assertTrim("a", "  a  ");
 
-    try {
-      CharSequences.trim(null);
-      fail("null should not be allowed");
-    } catch (NullPointerException e) {
-      // should reach here
-    }
+    assertThrows(NullPointerException.class, () -> CharSequences.trim(null), "null should not be allowed");
   }
 
-  private void assertTrim(String expected, CharSequence charSequence) {
+  private static void assertTrim(String expected, CharSequence charSequence) {
     assertEquals(expected, charSequence.toString().trim());
     assertEquals(expected, CharSequences.trim(charSequence).toString());
   }
