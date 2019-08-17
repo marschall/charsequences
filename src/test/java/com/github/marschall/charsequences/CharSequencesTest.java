@@ -1,5 +1,8 @@
 package com.github.marschall.charsequences;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -95,6 +98,26 @@ public class CharSequencesTest {
     assertInvalidInt(Long.toString(Integer.MAX_VALUE + 1L));
     assertInvalidInt("1" + Long.toString(Integer.MAX_VALUE + 1L));
     assertInvalidInt("-12" + Long.toString(Integer.MIN_VALUE - 1L).substring(1));
+  }
+
+  @Test
+  public void invalidIntRangeMessage() {
+    CharSequence charSequence = "xxx12axxx";
+    NumberFormatException exception = assertThrows(NumberFormatException.class,
+            () -> CharSequences.parseInt(charSequence, 3, 6));
+    String exceptionMessage = exception.getMessage();
+
+    assertThat(exceptionMessage, not(containsString("x")));
+  }
+
+  @Test
+  public void invalidLongRangeMessage() {
+    CharSequence charSequence = "xxx12axxx";
+    NumberFormatException exception = assertThrows(NumberFormatException.class,
+            () -> CharSequences.parseLong(charSequence, 3, 6));
+    String exceptionMessage = exception.getMessage();
+
+    assertThat(exceptionMessage, not(containsString("x")));
   }
 
   @Test

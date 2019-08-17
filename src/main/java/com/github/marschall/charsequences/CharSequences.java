@@ -68,7 +68,7 @@ public final class CharSequences {
 
     int length = endIndex - beginIndex;
     if (length == 0) {
-      throw invalidDecimalNumber(charSequence);
+      throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
     }
 
     char first = charSequence.charAt(beginIndex);
@@ -86,7 +86,7 @@ public final class CharSequences {
     }
 
     if ((endIndex - start) == 0) {
-      throw invalidDecimalNumber(charSequence);
+      throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
     }
 
     int product = 0;
@@ -97,7 +97,7 @@ public final class CharSequences {
     for (int i = start; i < endIndex; ++i) {
       char c = charSequence.charAt(i);
       if ((c < '0') || (c > '9')) {
-        throw invalidDecimalNumber(charSequence);
+        throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
       }
       int value = c - '0';
       try {
@@ -105,7 +105,7 @@ public final class CharSequences {
         // is equal or better than manual overflow checks for normal cases without overflow
         product = Math.subtractExact(Math.multiplyExact(product, 10), value);
       } catch (ArithmeticException e) {
-        throw invalidDecimalNumber(charSequence);
+        throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
       }
     }
 
@@ -115,7 +115,7 @@ public final class CharSequences {
       try {
         return Math.negateExact(product);
       } catch (ArithmeticException e) {
-        throw invalidDecimalNumber(charSequence);
+        throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
       }
     }
 
@@ -192,7 +192,7 @@ public final class CharSequences {
     }
     int length = endIndex - beginIndex;
     if (length == 0) {
-      throw invalidDecimalNumber(charSequence);
+      throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
     }
 
     char first = charSequence.charAt(beginIndex);
@@ -210,7 +210,7 @@ public final class CharSequences {
     }
 
     if ((endIndex - start) == 0) {
-      throw invalidDecimalNumber(charSequence);
+      throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
     }
 
     long product = 0;
@@ -221,7 +221,7 @@ public final class CharSequences {
     for (int i = start; i < endIndex; ++i) {
       char c = charSequence.charAt(i);
       if ((c < '0') || (c > '9')) {
-        throw invalidDecimalNumber(charSequence);
+        throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
       }
       int value = c - '0';
       try {
@@ -230,7 +230,7 @@ public final class CharSequences {
         // on Java 11+ use multiplyExact(JI)J
         product = Math.subtractExact(Math.multiplyExact(product, 10L), value);
       } catch (ArithmeticException e) {
-        throw invalidDecimalNumber(charSequence);
+        throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
       }
     }
 
@@ -240,13 +240,13 @@ public final class CharSequences {
       try {
         return Math.negateExact(product);
       } catch (ArithmeticException e) {
-        throw invalidDecimalNumber(charSequence);
+        throw invalidDecimalNumber(charSequence, beginIndex, endIndex);
       }
     }
   }
 
-  private static NumberFormatException invalidDecimalNumber(CharSequence charSequence) {
-    return new NumberFormatException("invalid decimal number " + charSequence);
+  private static NumberFormatException invalidDecimalNumber(CharSequence charSequence, int beginIndex, int endIndex) {
+    return new NumberFormatException("invalid decimal number " + charSequence.subSequence(beginIndex, endIndex));
   }
 
   /**
