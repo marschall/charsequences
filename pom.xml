@@ -101,6 +101,12 @@
         </executions>
       </plugin>
       <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkCount>0</forkCount>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <mavenExecutorId>forked-path</mavenExecutorId>
@@ -225,12 +231,7 @@
         <plugin>
           <groupId>codes.rafael.modulemaker</groupId>
           <artifactId>modulemaker-maven-plugin</artifactId>
-          <version>1.6</version>
-        </plugin>
-        <plugin>
-          <groupId>com.github.marschall</groupId>
-          <artifactId>jdeps-maven-plugin</artifactId>
-          <version>0.4.2</version>
+          <version>1.7</version>
         </plugin>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
         <plugin>
