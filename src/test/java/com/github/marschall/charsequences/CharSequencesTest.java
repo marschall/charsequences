@@ -206,9 +206,9 @@ public class CharSequencesTest {
             "should be invalid \"" + charSequence + "\"");
     String exceptionMessage = exception.getMessage();
     if (charSequence != null) {
-      assertTrue(exceptionMessage.contains(charSequence));
+      assertThat(exceptionMessage, containsString(charSequence.toString()));
     } else {
-      assertTrue(exceptionMessage.contains("null"));
+      assertThat(exceptionMessage, containsString("null"));
     }
 
     exception = assertThrows(NumberFormatException.class,
@@ -216,9 +216,9 @@ public class CharSequencesTest {
             "should be invalid \"" + charSequence + "\"");
     exceptionMessage = exception.getMessage();
     if (charSequence != null) {
-      assertTrue(exceptionMessage.contains(charSequence));
+      assertThat(exceptionMessage, containsString(charSequence.toString()));
     } else {
-      assertTrue(exceptionMessage.contains("null"));
+      assertThat(exceptionMessage, containsString("null"));
     }
   }
 
@@ -233,9 +233,9 @@ public class CharSequencesTest {
             "should be invalid \"" + charSequence + "\"");
     String exceptionMessage = exception.getMessage();
     if (charSequence != null) {
-      assertTrue(exceptionMessage.contains(charSequence));
+      assertThat(exceptionMessage, containsString(charSequence.toString()));
     } else {
-      assertTrue(exceptionMessage.contains("null"));
+      assertThat(exceptionMessage, containsString("null"));
     }
 
     exception = assertThrows(NumberFormatException.class,
@@ -243,9 +243,9 @@ public class CharSequencesTest {
             "should be invalid \"" + charSequence + "\"");
     exceptionMessage = exception.getMessage();
     if (charSequence != null) {
-      assertTrue(exceptionMessage.contains(charSequence));
+      assertThat(exceptionMessage, containsString(charSequence.toString()));
     } else {
-      assertTrue(exceptionMessage.contains("null"));
+      assertThat(exceptionMessage, containsString("null"));
     }
   }
 
