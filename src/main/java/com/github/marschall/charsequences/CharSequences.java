@@ -391,7 +391,7 @@ public final class CharSequences {
   }
 
   /**
-   * Splits this string around matches of the given delimiter character.
+   * Splits the given CharSequence around matches of the given delimiter character.
    *
    * @implNote the iterable is lazily computed, no backing collection
    *           is created
@@ -434,6 +434,36 @@ public final class CharSequences {
       return charSequence;
     }
     return charSequence.subSequence(1, charSequence.length());
+  }
+
+  /**
+   * Tests if the given CharSequence starts with the specified prefix.
+   *
+   * @param   charSequence the CharSequence to test
+   * @param   prefix the prefix
+   * @return  {@code true} if the character sequence represented by the
+   *          {@code prefix} argument is a prefix of the character sequence
+   *          represented by the {@code charSequence} argument,
+   *          {@code false} otherwise.
+   *          Note also that {@code true} will be returned if the
+   *          argument is an empty string or is equal to the given
+   *          {@code CharSequence} on a {@code char} by {@code char} basis
+   * @throws NullPointerException if any the given sequences is {@code null}
+   * @see String#startsWith(String)
+   */
+  public static boolean startsWith(CharSequence charSequence, CharSequence prefix) {
+    int sequenceLenth = charSequence.length();
+    int prefixLenght = prefix.length();
+    if (prefixLenght > sequenceLenth) {
+      return false;
+    }
+    for (int i = 0; i < prefixLenght; i++) {
+      if (charSequence.charAt(i) != prefix.charAt(i)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**

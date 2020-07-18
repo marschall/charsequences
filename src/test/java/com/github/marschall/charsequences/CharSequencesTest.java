@@ -380,4 +380,14 @@ public class CharSequencesTest {
     assertEquals(0xAF, (CharSequences.hexDigit('A') << 4) | CharSequences.hexDigit('F'));
   }
 
+  @Test
+  public void startsWith() {
+    assertTrue(CharSequences.startsWith("ab", "a"));
+    assertTrue(CharSequences.startsWith("a", "a"));
+    assertTrue(CharSequences.startsWith("a", ""));
+
+    assertFalse(CharSequences.startsWith("aaa", "ab"));
+    assertFalse(CharSequences.startsWith("a", "aa"));
+  }
+
 }
