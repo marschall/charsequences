@@ -326,7 +326,7 @@
     <dependency>
       <groupId>org.openjdk.jol</groupId>
       <artifactId>jol-core</artifactId>
-      <version>0.11</version>
+      <version>0.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -371,7 +371,7 @@
     <java.version>1.8</java.version>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-    <jmh.version>1.23</jmh.version>
+    <jmh.version>1.25.2</jmh.version>
   </properties>
 
 </project>
