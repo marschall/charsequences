@@ -1,14 +1,23 @@
 package com.github.marschall.charsequences;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,6 +25,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class CharSequencesTest {
 
@@ -278,7 +289,52 @@ public class CharSequencesTest {
     assertEquals(2, CharSequences.lastIndexOf("aab", 'b'));
   }
 
+  @ParameterizedTest
+  @MethodSource("emptySequences")
+  public void emptyCharSequence(CharSequence s) {
+    assertEquals(0, s.length());
+    assertSame(s, s.subSequence(0, 0));
+    assertEquals("", s.toString());
+    assertArrayEquals(new int[0], s.chars().toArray());
+    assertArrayEquals(new int[0], s.codePoints().toArray());
+    assertThrows(IndexOutOfBoundsException.class, () -> s.subSequence(0, 1));
+    assertThrows(IndexOutOfBoundsException.class, () -> s.subSequence(1, 0));
+    IndexOutOfBoundsException exception = assertThrows(IndexOutOfBoundsException.class, () -> s.charAt(0));
+    if (isJava9OrLater()) {
+      assertThat(exception.getMessage(), endsWith("ndex out of range: 0"));
+    }
+  }
 
+  private boolean isJava9OrLater() {
+    try {
+      Class.forName("java.lang.Runtime$Version");
+      return true;
+    } catch (ClassNotFoundException e) {
+      return false;
+    }
+  }
+
+  public static List<CharSequence> emptySequences() {
+    return List.of("", CharSequences.EMPTY);
+  }
+
+  @Test
+  public void emptyCharSequenceSerialization() throws ClassNotFoundException, IOException {
+    assertSame(CharSequences.EMPTY, serializationCopy(CharSequences.EMPTY));
+  }
+
+  private static Object serializationCopy(Object o) throws IOException, ClassNotFoundException {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(bos)) {
+      objectOutputStream.writeObject(o);
+    }
+    try (InputStream inputStream = new ByteArrayInputStream(bos.toByteArray());
+            ObjectInputStream objectInput = new ObjectInputStream(inputStream)) {
+      return objectInput.readObject();
+    }
+  }
+
+  // TODO
   public static CharSequence subSequenceBetween(CharSequence charSequence, char start, char end) {
     int startIndex = CharSequences.indexOf(charSequence, start);
     if (startIndex != -1) {

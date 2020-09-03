@@ -5,9 +5,9 @@ Utility methods for dealing with `java.lang.CharSequence`.
 
 ```xml
 <dependency>
-    <groupId>com.github.marschall</groupId>
-    <artifactId>charsequences</artifactId>
-    <version>0.7.0</version>
+  <groupId>com.github.marschall</groupId>
+  <artifactId>charsequences</artifactId>
+  <version>0.7.0</version>
 </dependency>
 ```
 
@@ -21,6 +21,7 @@ When dealing with [CharSequence](https://docs.oracle.com/javase/8/docs/api/java/
  - [Long.parseLong(String)](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Long.html#parseLong(java.lang.String)), no longer needed in Java 9 but still faster
  - [String.split(String)](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html#split(java.lang.String)), limited, only a single character is allowed, not a full regex
  - [UUID.fromString(String)](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html#fromString(java.lang.String)), no intermediary allocation
- 
+ - an empty implementation of `CharSequence`
+
 They avoid allocation where possible, check out the [Javadoc](http://www.javadoc.io/doc/com.github.marschall/charsequences) for more information.
 
