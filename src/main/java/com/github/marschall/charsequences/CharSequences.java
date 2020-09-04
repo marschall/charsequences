@@ -8,12 +8,12 @@ import java.util.UUID;
  * Utility methods for dealing with {@link CharSequence} objects.
  */
 public final class CharSequences {
-  
+
   /**
    * An empty {@link CharSequence} that is {@link java.io.Serializable}.
    * <p>
    * There are certain trade-offs whether this constant or {@code ""}
-   * or whatever {@subSequence #subSequence} returns is used.
+   * or whatever {@code CharSequence#subSequence(int, int)} returns is used.
    * While the methods of this instance are optimized and small the
    * call site may also become more complex.
    */
