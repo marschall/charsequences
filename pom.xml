@@ -4,7 +4,7 @@
 
   <groupId>com.github.marschall</groupId>
   <artifactId>charsequences</artifactId>
-  <version>0.8.0</version>
+  <version>0.8.1-SNAPSHOT</version>
   <inceptionYear>2016</inceptionYear>
   <url>https://github.com/marschall/charsequences</url>
   <name>CharSequences</name>
@@ -45,7 +45,7 @@
     <connection>scm:git:git@github.com:marschall/charsequences.git</connection>
     <developerConnection>scm:git:git@github.com:marschall/charsequences.git</developerConnection>
     <url>${project.url}</url>
-    <tag>0.8.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <build>
