@@ -315,7 +315,7 @@ public class CharSequencesTest {
   }
 
   public static List<CharSequence> emptySequences() {
-    return List.of("", CharSequences.EMPTY);
+    return Arrays.asList("", CharSequences.EMPTY);
   }
 
   @Test
