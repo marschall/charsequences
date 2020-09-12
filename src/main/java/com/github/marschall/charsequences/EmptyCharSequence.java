@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 final class EmptyCharSequence implements CharSequence, Serializable {
 
   static final CharSequence INSTANCE = new EmptyCharSequence();
-  
+
   private static final MethodHandle NEW_INDEX_OUT_OF_BOUNDS_EXCEPTION;
 
   static {
@@ -27,7 +27,7 @@ final class EmptyCharSequence implements CharSequence, Serializable {
       } catch (NoSuchMethodException e) {
         Constructor<IndexOutOfBoundsException> java8Constructor = IndexOutOfBoundsException.class.getConstructor();
         MethodHandle java8ConstructorHandle = lookup.unreflectConstructor(java8Constructor);
-        constructorHandle = MethodHandles.dropArguments(java8ConstructorHandle, 1, String.class);
+        constructorHandle = MethodHandles.dropArguments(java8ConstructorHandle, 0, int.class);
       }
     } catch (IllegalAccessException | NoSuchMethodException e) {
       throw new RuntimeException("could not find matching IndexOutOfBoundsException constructor", e);
@@ -54,7 +54,7 @@ final class EmptyCharSequence implements CharSequence, Serializable {
       throw new IllegalStateException("could not call IndexOutOfBoundsException constructor", e);
     }
   }
-  
+
   @Override
   public String toString() {
     return "";
@@ -62,7 +62,7 @@ final class EmptyCharSequence implements CharSequence, Serializable {
 
   @Override
   public CharSequence subSequence(int start, int end) {
-    if (start != 0 || end != 0) {
+    if ((start != 0) || (end != 0)) {
       throw new IndexOutOfBoundsException();
     }
     return this;

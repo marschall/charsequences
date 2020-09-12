@@ -300,7 +300,7 @@ public class CharSequencesTest {
     assertThrows(IndexOutOfBoundsException.class, () -> s.subSequence(0, 1));
     assertThrows(IndexOutOfBoundsException.class, () -> s.subSequence(1, 0));
     IndexOutOfBoundsException exception = assertThrows(IndexOutOfBoundsException.class, () -> s.charAt(0));
-    if (isJava9OrLater()) {
+    if (this.isJava9OrLater()) {
       assertThat(exception.getMessage(), endsWith("ndex out of range: 0"));
     }
   }

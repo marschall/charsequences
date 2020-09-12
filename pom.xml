@@ -4,7 +4,7 @@
 
   <groupId>com.github.marschall</groupId>
   <artifactId>charsequences</artifactId>
-  <version>0.7.1-SNAPSHOT</version>
+  <version>0.8.1-SNAPSHOT</version>
   <inceptionYear>2016</inceptionYear>
   <url>https://github.com/marschall/charsequences</url>
   <name>CharSequences</name>
