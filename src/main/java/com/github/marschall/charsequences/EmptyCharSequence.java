@@ -38,7 +38,7 @@ final class EmptyCharSequence implements CharSequence, Serializable {
   private EmptyCharSequence() {
     super();
   }
-  
+
   // default method in JDK 15+
   public boolean isEmpty() {
     return true;
